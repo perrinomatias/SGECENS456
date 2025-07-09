@@ -212,7 +212,8 @@
                     <li><i class="fas fa-check"></i> Dashboard de gestión con interfaz intuitiva</li>
                     <li><i class="fas fa-check"></i> Acceso directo a 3 Google Apps Script</li>
                     <li><i class="fas fa-check"></i> Diseño responsive para móviles</li>
-                    <li><i class="fas fa-check"></i> Múltiples roles de usuario</li>
+                    <li><i class="fas fa-check"></i> Control de acceso por roles (4 niveles)</li>
+                    <li><i class="fas fa-check"></i> Sistema específico de carga de notas</li>
                 </ul>
             </div>
 
@@ -235,25 +236,25 @@
                             <td><strong>admin</strong></td>
                             <td>admin123</td>
                             <td>Administrador</td>
-                            <td>Acceso completo al sistema</td>
-                        </tr>
-                        <tr>
-                            <td><strong>director</strong></td>
-                            <td>director123</td>
-                            <td>Director</td>
-                            <td>Gestión institucional</td>
-                        </tr>
-                        <tr>
-                            <td><strong>secretaria</strong></td>
-                            <td>secretaria123</td>
-                            <td>Secretaría</td>
-                            <td>Gestión administrativa</td>
+                            <td>Acceso completo: Gestión + Notas + Alertas</td>
                         </tr>
                         <tr>
                             <td><strong>preceptor</strong></td>
                             <td>preceptor123</td>
                             <td>Preceptor</td>
-                            <td>Gestión de estudiantes</td>
+                            <td>Acceso: Gestión + Alertas</td>
+                        </tr>
+                        <tr>
+                            <td><strong>dicyt</strong></td>
+                            <td>dicyt123</td>
+                            <td>DICYT</td>
+                            <td>Acceso: Gestión + Alertas</td>
+                        </tr>
+                        <tr>
+                            <td><strong>profesor</strong></td>
+                            <td>profesor123</td>
+                            <td>Profesor</td>
+                            <td>Acceso: Solo Carga de Notas</td>
                         </tr>
                     </tbody>
                 </table>
@@ -292,11 +293,26 @@
                 
                 <div class="code-block">
 1. Sistema Principal: /exec<br>
-2. Carga de Datos: /exec?page=carga<br>
+2. Carga de Notas: /exec?page=carga<br>
 3. Sistema de Alertas: /exec?page=alertas
                 </div>
                 
                 <p><strong>Nota:</strong> Los Apps Script se abren automáticamente desde el dashboard una vez que te loguees.</p>
+            </div>
+
+            <!-- Control de Acceso -->
+            <div class="test-section">
+                <h2><i class="fas fa-shield-alt"></i> Sistema de Control de Acceso</h2>
+                <p>El sistema implementa control de acceso basado en roles (RBAC):</p>
+                <ul class="features-list" style="margin-top: 1rem;">
+                    <li><i class="fas fa-crown"></i> <strong>Administrador:</strong> Ve todas las opciones (Gestión + Notas + Alertas)</li>
+                    <li><i class="fas fa-user-shield"></i> <strong>Preceptor/DICYT:</strong> Solo ve Gestión y Alertas</li>
+                    <li><i class="fas fa-chalkboard-teacher"></i> <strong>Profesor:</strong> Solo ve Carga de Notas</li>
+                </ul>
+                <div class="alert">
+                    <i class="fas fa-lightbulb"></i>
+                    <strong>Tip:</strong> Prueba iniciar sesión con diferentes roles para ver cómo cambia la interfaz automáticamente.
+                </div>
             </div>
 
             <!-- Instrucciones -->
@@ -306,6 +322,7 @@
                     <li>Visita el <strong>sitio web principal</strong> para ver la página institucional</li>
                     <li>Haz clic en "Sistema de Gestión" en el menú o ve directamente al <strong>login</strong></li>
                     <li>Usa cualquiera de las credenciales de prueba mostradas arriba</li>
+                    <li><strong>¡Nuevo!</strong> Prueba diferentes roles para ver el control de acceso</li>
                     <li>Explora el <strong>dashboard</strong> y prueba los enlaces a los Apps Script</li>
                     <li>Prueba el logout y la funcionalidad de "recordarme"</li>
                 </ol>
@@ -345,8 +362,10 @@
 
         // Mensaje de bienvenida en consola
         console.log('🎓 Sistema de Gestión CENS 456 - Página de Prueba');
-        console.log('👥 Usuarios de prueba disponibles: admin, director, secretaria, preceptor');
+        console.log('👥 Usuarios de prueba disponibles: admin, preceptor, dicyt, profesor');
         console.log('🔑 Contraseña para todos: [usuario]123');
+        console.log('📝 Nuevo: Sistema de Carga de Notas para profesores');
+        console.log('🎯 Control de acceso por roles implementado');
         console.log('🚀 ¡Listo para probar el sistema!');
     </script>
 </body>
