@@ -385,10 +385,10 @@
     <script>
         // Datos de usuarios (en producción esto debería estar en un backend seguro)
         const usuarios = {
-            'admin': { password: 'admin123', nombre: 'Administrador', role: 'admin' },
-            'director': { password: 'director123', nombre: 'Director', role: 'director' },
-            'secretaria': { password: 'secretaria123', nombre: 'Secretaría', role: 'secretaria' },
-            'preceptor': { password: 'preceptor123', nombre: 'Preceptor', role: 'preceptor' }
+            'admin': { password: 'admin123', nombre: 'Administrador', role: 'administrador' },
+            'preceptor': { password: 'preceptor123', nombre: 'Preceptor', role: 'preceptor' },
+            'dicyt': { password: 'dicyt123', nombre: 'DICYT', role: 'dicyt' },
+            'profesor': { password: 'profesor123', nombre: 'Profesor', role: 'profesor' }
         };
 
         // Referencias DOM
@@ -533,8 +533,9 @@
         usernameInput.focus();
 
         console.log('🔐 Sistema de Login CENS 456 cargado');
-        console.log('👥 Usuarios disponibles: admin, director, secretaria, preceptor');
+        console.log('👥 Usuarios disponibles: admin, preceptor, dicyt, profesor');
         console.log('🔑 Contraseñas: [usuario]123 (ej: admin123)');
+        console.log('🎯 Control de acceso: Administrador (completo), Preceptor/DICYT (gestión+alertas), Profesor (solo notas)');
     </script>
 </body>
 </html>

@@ -37,12 +37,12 @@ Este repositorio contiene el sistema web completo del CENS 456 Ezeiza, que inclu
 
 ### Usuarios Predefinidos
 
-| Usuario    | Contraseña    | Rol           | Descripción                    |
-|------------|---------------|---------------|--------------------------------|
-| `admin`    | `admin123`    | Administrador | Acceso completo al sistema     |
-| `director` | `director123` | Director      | Gestión institucional          |
-| `secretaria` | `secretaria123` | Secretaría  | Gestión administrativa         |
-| `preceptor` | `preceptor123` | Preceptor   | Gestión de estudiantes         |
+| Usuario     | Contraseña     | Rol           | Permisos de Acceso                     |
+|-------------|----------------|---------------|----------------------------------------|
+| `admin`     | `admin123`     | Administrador | ✅ Gestión + ✅ Notas + ✅ Alertas     |
+| `preceptor` | `preceptor123` | Preceptor     | ✅ Gestión + ❌ Notas + ✅ Alertas     |
+| `dicyt`     | `dicyt123`     | DICYT         | ✅ Gestión + ❌ Notas + ✅ Alertas     |
+| `profesor`  | `profesor123`  | Profesor      | ❌ Gestión + ✅ Notas + ❌ Alertas     |
 
 ### Funcionalidades de Seguridad
 - ✅ Validación de credenciales
@@ -50,6 +50,29 @@ Este repositorio contiene el sistema web completo del CENS 456 Ezeiza, que inclu
 - ✅ Auto-logout por inactividad (30 minutos)
 - ✅ Protección de rutas
 - ✅ Almacenamiento local seguro
+- ✅ Control de acceso basado en roles (RBAC)
+
+### Control de Acceso por Roles
+
+#### 🔧 **Administrador**
+- **Acceso:** Completo a todos los sistemas
+- **Funciones:** Gestión institucional, carga de notas, alertas
+- **Uso:** Supervisión general del sistema
+
+#### 👮 **Preceptor**
+- **Acceso:** Sistema principal + Alertas
+- **Funciones:** Gestión de estudiantes, control de alertas
+- **Uso:** Seguimiento académico y disciplinario
+
+#### 🏛️ **DICYT**
+- **Acceso:** Sistema principal + Alertas  
+- **Funciones:** Control institucional, gestión de alertas
+- **Uso:** Supervisión técnica y administrativa
+
+#### 👨‍🏫 **Profesor**
+- **Acceso:** Solo carga de notas
+- **Funciones:** Registro de calificaciones
+- **Uso:** Evaluación de estudiantes
 
 ## 🔗 Google Apps Script Integrados
 
@@ -59,9 +82,9 @@ El sistema permite acceso directo a tres aplicaciones de Google Apps Script:
    - URL: `https://script.google.com/.../exec`
    - Funcionalidad: Gestión principal del centro
 
-2. **Carga de Datos**
+2. **Carga de Notas**
    - URL: `https://script.google.com/.../exec?page=carga`
-   - Funcionalidad: Herramientas de carga masiva
+   - Funcionalidad: Sistema de registro de calificaciones
 
 3. **Sistema de Alertas**
    - URL: `https://script.google.com/.../exec?page=alertas`

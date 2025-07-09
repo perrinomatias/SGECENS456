@@ -650,20 +650,20 @@
 
                 <div class="nav-section">
                     <div class="nav-section-title">Google Apps Script</div>
-                    <div class="nav-item">
+                    <div class="nav-item" id="navPrincipal">
                         <a href="#" class="nav-link" data-section="principal">
                             <i class="fas fa-desktop"></i>
                             Sistema Principal
                         </a>
                     </div>
-                    <div class="nav-item">
+                    <div class="nav-item" id="navCarga">
                         <a href="#" class="nav-link" data-section="carga">
-                            <i class="fas fa-upload"></i>
-                            Carga de Datos
+                            <i class="fas fa-edit"></i>
+                            Carga de Notas
                             <span class="badge">NEW</span>
                         </a>
                     </div>
-                    <div class="nav-item">
+                    <div class="nav-item" id="navAlertas">
                         <a href="#" class="nav-link" data-section="alertas">
                             <i class="fas fa-bell"></i>
                             Alertas
@@ -774,7 +774,7 @@
                     
                     <div class="actions-grid">
                         <!-- Sistema Principal -->
-                        <div class="action-card primary" data-app="principal">
+                        <div class="action-card primary" data-app="principal" id="sistemaPrincipalCard">
                             <div class="action-header">
                                 <div class="action-icon primary">
                                     <i class="fas fa-desktop"></i>
@@ -796,31 +796,31 @@
                             </div>
                         </div>
 
-                        <!-- Carga de Datos -->
-                        <div class="action-card success" data-app="carga">
+                        <!-- Carga de Notas -->
+                        <div class="action-card success" data-app="carga" id="cargaNotasCard">
                             <div class="action-header">
                                 <div class="action-icon success">
-                                    <i class="fas fa-upload"></i>
+                                    <i class="fas fa-edit"></i>
                                 </div>
                                 <div class="action-info">
-                                    <h3>Carga de Datos</h3>
-                                    <p>Herramienta para cargar y gestionar información del centro</p>
+                                    <h3>Carga de Notas</h3>
+                                    <p>Sistema para registrar y gestionar calificaciones de estudiantes</p>
                                 </div>
                             </div>
                             <div class="action-footer">
                                 <a href="#" class="action-link" onclick="openAppScript('carga')">
-                                    Acceder a Carga
+                                    Acceder a Notas
                                     <i class="fas fa-external-link-alt"></i>
                                 </a>
                                 <div class="action-status">
                                     <span class="status-dot"></span>
-                                    Actualizado
+                                    Disponible
                                 </div>
                             </div>
                         </div>
 
                         <!-- Sistema de Alertas -->
-                        <div class="action-card warning" data-app="alertas">
+                        <div class="action-card warning" data-app="alertas" id="alertasCard">
                             <div class="action-header">
                                 <div class="action-icon warning">
                                     <i class="fas fa-bell"></i>
@@ -877,6 +877,14 @@
             initializeDashboard(user);
         });
 
+        // Configuración de permisos por rol
+        const rolePermissions = {
+            'administrador': ['principal', 'carga', 'alertas'], // Acceso completo
+            'preceptor': ['principal', 'alertas'], // Gestión y alertas
+            'dicyt': ['principal', 'alertas'], // Gestión y alertas  
+            'profesor': ['carga'] // Solo carga de notas
+        };
+
         // Inicializar dashboard con datos del usuario
         function initializeDashboard(user) {
             // Actualizar información del usuario
@@ -895,6 +903,73 @@
             
             document.getElementById('welcomeMessage').textContent = 
                 `${greeting}. Accede a todas las herramientas de gestión del CENS 456 desde este panel.`;
+            
+            // Aplicar control de acceso basado en roles
+            applyRoleBasedAccess(user.role);
+        }
+
+        // Función para aplicar control de acceso según el rol
+        function applyRoleBasedAccess(userRole) {
+            const userPermissions = rolePermissions[userRole] || [];
+            
+            // Elementos del menú de navegación
+            const navElements = {
+                'principal': document.getElementById('navPrincipal'),
+                'carga': document.getElementById('navCarga'),
+                'alertas': document.getElementById('navAlertas')
+            };
+            
+            // Elementos de las tarjetas
+            const cardElements = {
+                'principal': document.getElementById('sistemaPrincipalCard'),
+                'carga': document.getElementById('cargaNotasCard'),
+                'alertas': document.getElementById('alertasCard')
+            };
+            
+            // Ocultar/mostrar elementos según permisos
+            Object.keys(navElements).forEach(permission => {
+                const navElement = navElements[permission];
+                const cardElement = cardElements[permission];
+                
+                if (userPermissions.includes(permission)) {
+                    // Mostrar elemento
+                    if (navElement) navElement.style.display = 'block';
+                    if (cardElement) cardElement.style.display = 'block';
+                } else {
+                    // Ocultar elemento
+                    if (navElement) navElement.style.display = 'none';
+                    if (cardElement) cardElement.style.display = 'none';
+                }
+            });
+            
+            // Actualizar mensaje de bienvenida según el rol
+            updateWelcomeMessage(userRole, userPermissions);
+        }
+
+        // Función para actualizar mensaje según rol
+        function updateWelcomeMessage(userRole, permissions) {
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            let roleMessage = '';
+            
+            switch(userRole) {
+                case 'administrador':
+                    roleMessage = 'Tienes acceso completo a todos los sistemas de gestión.';
+                    break;
+                case 'preceptor':
+                    roleMessage = 'Accede al sistema de gestión y alertas institucionales.';
+                    break;
+                case 'dicyt':
+                    roleMessage = 'Accede al sistema de gestión y control de alertas.';
+                    break;
+                case 'profesor':
+                    roleMessage = 'Accede al sistema de carga de notas para tus estudiantes.';
+                    break;
+                default:
+                    roleMessage = 'Accede a las herramientas disponibles para tu rol.';
+            }
+            
+            const currentText = welcomeMessage.textContent;
+            welcomeMessage.textContent = currentText + ' ' + roleMessage;
         }
 
         // Toggle sidebar
@@ -1017,6 +1092,8 @@
 
         console.log('🏫 Dashboard CENS 456 cargado correctamente');
         console.log('🔗 Google Apps Script configurados:', Object.keys(appScriptUrls));
+        console.log('👥 Roles disponibles: administrador, preceptor, dicyt, profesor');
+        console.log('🔐 Control de acceso por roles activado');
     </script>
 </body>
 </html>
