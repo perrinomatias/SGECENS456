@@ -17,6 +17,7 @@ Este repositorio contiene el sistema web completo del CENS 456 Ezeiza, que inclu
 - Proceso de inscripción
 - Testimonios de egresados
 - Formulario de contacto
+- **🆕 Integración WhatsApp** para contacto directo
 - Optimizado para SEO
 
 ### Sistema de Login (`login.html`)
@@ -90,7 +91,20 @@ El sistema permite acceso directo a tres aplicaciones de Google Apps Script:
    - URL: `https://script.google.com/.../exec?page=alertas`
    - Funcionalidad: Gestión de notificaciones
 
-## 📁 Estructura del Proyecto
+## � Integración WhatsApp
+
+El sistema incluye integración completa con WhatsApp para facilitar el contacto:
+
+- **📍 Sección de Contacto**: Botón dedicado en información de contacto
+- **📝 Alternativa al Formulario**: Opción rápida después del formulario de contacto  
+- **🔗 Redes Sociales**: Enlace directo en el footer
+- **📱 Mobile Optimized**: Diseñado especialmente para dispositivos móviles
+- **🎨 Animaciones**: Efectos visuales atractivos con bounce animation
+
+**Enlace WhatsApp**: `https://wa.me/ais/1151919419567870?s=5`  
+**Mensaje**: "Chatea con CENS 456 - Termina tu secundaria"
+
+## �📁 Estructura del Proyecto
 
 ```
 SGECENS456/
