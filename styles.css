@@ -896,3 +896,36 @@ p {
         justify-content: center;
     }
 }
+
+/* Sistema de Gestión - Enlace Especial */
+.nav-link-special {
+    background: linear-gradient(135deg, #2563eb, #f59e0b) !important;
+    color: white !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 25px !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+    margin-left: 1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+}
+
+.nav-link-special:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3) !important;
+    color: white !important;
+}
+
+.nav-link-special i {
+    font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+    .nav-link-special {
+        margin-left: 0 !important;
+        margin-top: 1rem !important;
+        text-align: center !important;
+        justify-content: center !important;
+    }
+}

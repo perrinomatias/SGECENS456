@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba del Sistema - CENS 456 Ezeiza</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .test-header {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .test-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .test-header p {
+            opacity: 0.9;
+        }
+
+        .test-content {
+            padding: 2rem;
+        }
+
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+        }
+
+        .test-section h2 {
+            color: #1f2937;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .credentials-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .credentials-table th,
+        .credentials-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .credentials-table th {
+            background: #f3f4f6;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .credentials-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .test-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+        }
+
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+        }
+
+        .test-button.secondary {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .test-button.warning {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+
+        .features-list i {
+            color: #10b981;
+            width: 20px;
+        }
+
+        .alert {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            color: #92400e;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .alert i {
+            margin-right: 0.5rem;
+        }
+
+        .code-block {
+            background: #1f2937;
+            color: #e5e7eb;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .footer-info {
+            background: #f3f4f6;
+            padding: 1.5rem;
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .test-header {
+                padding: 1.5rem;
+            }
+
+            .test-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .test-content {
+                padding: 1.5rem;
+            }
+
+            .credentials-table {
+                font-size: 0.9rem;
+            }
+
+            .test-button {
+                width: 100%;
+                justify-content: center;
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1><i class="fas fa-graduation-cap"></i> Sistema de Gestión CENS 456</h1>
+            <p>Página de prueba y demostración del sistema</p>
+        </div>
+
+        <div class="test-content">
+            <!-- Información del Sistema -->
+            <div class="test-section">
+                <h2><i class="fas fa-info-circle"></i> Acerca del Sistema</h2>
+                <p>Este es un sistema completo de gestión para el CENS 456 Ezeiza que incluye:</p>
+                <ul class="features-list">
+                    <li><i class="fas fa-check"></i> Sitio web institucional moderno</li>
+                    <li><i class="fas fa-check"></i> Sistema de autenticación seguro</li>
+                    <li><i class="fas fa-check"></i> Dashboard de gestión con interfaz intuitiva</li>
+                    <li><i class="fas fa-check"></i> Acceso directo a 3 Google Apps Script</li>
+                    <li><i class="fas fa-check"></i> Diseño responsive para móviles</li>
+                    <li><i class="fas fa-check"></i> Múltiples roles de usuario</li>
+                </ul>
+            </div>
+
+            <!-- Credenciales de Prueba -->
+            <div class="test-section">
+                <h2><i class="fas fa-key"></i> Credenciales de Prueba</h2>
+                <p>Utiliza cualquiera de estas credenciales para probar el sistema:</p>
+                
+                <table class="credentials-table">
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Contraseña</th>
+                            <th>Rol</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>admin</strong></td>
+                            <td>admin123</td>
+                            <td>Administrador</td>
+                            <td>Acceso completo al sistema</td>
+                        </tr>
+                        <tr>
+                            <td><strong>director</strong></td>
+                            <td>director123</td>
+                            <td>Director</td>
+                            <td>Gestión institucional</td>
+                        </tr>
+                        <tr>
+                            <td><strong>secretaria</strong></td>
+                            <td>secretaria123</td>
+                            <td>Secretaría</td>
+                            <td>Gestión administrativa</td>
+                        </tr>
+                        <tr>
+                            <td><strong>preceptor</strong></td>
+                            <td>preceptor123</td>
+                            <td>Preceptor</td>
+                            <td>Gestión de estudiantes</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="alert">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>Importante:</strong> Estas son credenciales de prueba. En producción, cambia todas las contraseñas por unas seguras.
+                </div>
+            </div>
+
+            <!-- Enlaces de Prueba -->
+            <div class="test-section">
+                <h2><i class="fas fa-link"></i> Enlaces del Sistema</h2>
+                <p>Accede a las diferentes partes del sistema:</p>
+                
+                <a href="index.html" class="test-button">
+                    <i class="fas fa-home"></i>
+                    Sitio Web Principal
+                </a>
+                
+                <a href="login.html" class="test-button secondary">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Sistema de Login
+                </a>
+                
+                <a href="dashboard.html" class="test-button warning">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard (requiere login)
+                </a>
+            </div>
+
+            <!-- Apps Script -->
+            <div class="test-section">
+                <h2><i class="fas fa-cloud"></i> Google Apps Script Configurados</h2>
+                <p>El sistema está configurado para acceder a estos 3 Google Apps Script:</p>
+                
+                <div class="code-block">
+1. Sistema Principal: /exec<br>
+2. Carga de Datos: /exec?page=carga<br>
+3. Sistema de Alertas: /exec?page=alertas
+                </div>
+                
+                <p><strong>Nota:</strong> Los Apps Script se abren automáticamente desde el dashboard una vez que te loguees.</p>
+            </div>
+
+            <!-- Instrucciones -->
+            <div class="test-section">
+                <h2><i class="fas fa-list-ol"></i> Cómo Probar el Sistema</h2>
+                <ol style="margin-left: 2rem; color: #374151; line-height: 1.6;">
+                    <li>Visita el <strong>sitio web principal</strong> para ver la página institucional</li>
+                    <li>Haz clic en "Sistema de Gestión" en el menú o ve directamente al <strong>login</strong></li>
+                    <li>Usa cualquiera de las credenciales de prueba mostradas arriba</li>
+                    <li>Explora el <strong>dashboard</strong> y prueba los enlaces a los Apps Script</li>
+                    <li>Prueba el logout y la funcionalidad de "recordarme"</li>
+                </ol>
+            </div>
+
+            <!-- Características Técnicas -->
+            <div class="test-section">
+                <h2><i class="fas fa-cogs"></i> Características Técnicas</h2>
+                <ul class="features-list">
+                    <li><i class="fas fa-mobile-alt"></i> Diseño 100% responsive</li>
+                    <li><i class="fas fa-shield-alt"></i> Autenticación local con localStorage</li>
+                    <li><i class="fas fa-clock"></i> Auto-logout por inactividad (30 min)</li>
+                    <li><i class="fas fa-eye"></i> Interfaz moderna con animaciones</li>
+                    <li><i class="fas fa-users"></i> Sistema de roles diferenciados</li>
+                    <li><i class="fas fa-external-link-alt"></i> Integración directa con Google Apps Script</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-info">
+            <p><i class="fas fa-graduation-cap"></i> <strong>CENS 456 Ezeiza</strong> - Sistema de Gestión Institucional</p>
+            <p>Versión 2.0 | © 2024 | Desarrollado para la gestión educativa moderna</p>
+        </div>
+    </div>
+
+    <script>
+        // Agregar interactividad a los botones
+        document.querySelectorAll('.test-button').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-4px)';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+        });
+
+        // Mensaje de bienvenida en consola
+        console.log('🎓 Sistema de Gestión CENS 456 - Página de Prueba');
+        console.log('👥 Usuarios de prueba disponibles: admin, director, secretaria, preceptor');
+        console.log('🔑 Contraseña para todos: [usuario]123');
+        console.log('🚀 ¡Listo para probar el sistema!');
+    </script>
+</body>
+</html>
