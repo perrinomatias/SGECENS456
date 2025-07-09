@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Gestión - CENS 456 Ezeiza</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #f59e0b;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+            --dark-color: #1f2937;
+            --gray-color: #6b7280;
+            --light-gray: #f3f4f6;
+            --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .login-container {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            max-width: 400px;
+            width: 100%;
+            position: relative;
+        }
+
+        .login-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .login-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" patternUnits="userSpaceOnUse" width="100" height="100"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        }
+
+        .login-header .logo {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-header p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-form {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark-color);
+            font-size: 0.9rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--white);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-color);
+            font-size: 1.1rem;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--gray-color);
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: var(--primary-color);
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .remember-me label {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--gray-color);
+        }
+
+        .forgot-password {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            color: var(--primary-dark);
+        }
+
+        .login-button {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--white);
+            border: none;
+            padding: 0.875rem 1.5rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .login-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .button-loading {
+            display: none;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .button-text {
+            transition: opacity 0.3s ease;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid var(--white);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background: #fef2f2;
+            color: var(--error-color);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--error-color);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-footer {
+            text-align: center;
+            padding: 1.5rem 2rem;
+            background: var(--light-gray);
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .login-footer p {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+
+        .version-info {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+            font-size: 0.8rem;
+            color: var(--gray-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 1rem;
+                border-radius: 16px;
+            }
+
+            .login-header {
+                padding: 1.5rem;
+            }
+
+            .login-form {
+                padding: 1.5rem;
+            }
+
+            .login-footer {
+                padding: 1rem 1.5rem;
+            }
+        }
+
+        /* Animaciones adicionales */
+        .login-container {
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h1>Portal de Gestión</h1>
+            <p>CENS 456 Ezeiza</p>
+        </div>
+
+        <form class="login-form" id="loginForm">
+            <div class="error-message" id="errorMessage">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="errorText"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="username">Usuario</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" id="username" name="username" placeholder="Ingresa tu usuario" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required>
+                    <button type="button" class="password-toggle" id="passwordToggle">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="remember-forgot">
+                <div class="remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Recordarme</label>
+                </div>
+                <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+            </div>
+
+            <button type="submit" class="login-button" id="loginButton">
+                <span class="button-text">Iniciar Sesión</span>
+                <div class="button-loading">
+                    <div class="spinner"></div>
+                </div>
+            </button>
+        </form>
+
+        <div class="login-footer">
+            <p>Sistema de Gestión Institucional</p>
+            <div class="version-info">
+                Versión 2.0 | © 2024 CENS 456 Ezeiza
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Datos de usuarios (en producción esto debería estar en un backend seguro)
+        const usuarios = {
+            'admin': { password: 'admin123', nombre: 'Administrador', role: 'admin' },
+            'director': { password: 'director123', nombre: 'Director', role: 'director' },
+            'secretaria': { password: 'secretaria123', nombre: 'Secretaría', role: 'secretaria' },
+            'preceptor': { password: 'preceptor123', nombre: 'Preceptor', role: 'preceptor' }
+        };
+
+        // Referencias DOM
+        const loginForm = document.getElementById('loginForm');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const passwordToggle = document.getElementById('passwordToggle');
+        const loginButton = document.getElementById('loginButton');
+        const buttonText = document.querySelector('.button-text');
+        const buttonLoading = document.querySelector('.button-loading');
+        const errorMessage = document.getElementById('errorMessage');
+        const errorText = document.getElementById('errorText');
+        const rememberCheckbox = document.getElementById('remember');
+
+        // Toggle de contraseña
+        passwordToggle.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            const icon = this.querySelector('i');
+            if (type === 'password') {
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            } else {
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            }
+        });
+
+        // Función para mostrar error
+        function showError(message) {
+            errorText.textContent = message;
+            errorMessage.style.display = 'block';
+            
+            // Auto ocultar después de 5 segundos
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        // Función para ocultar error
+        function hideError() {
+            errorMessage.style.display = 'none';
+        }
+
+        // Función para mostrar estado de carga
+        function setLoading(loading) {
+            if (loading) {
+                buttonText.style.opacity = '0';
+                buttonLoading.style.display = 'block';
+                loginButton.disabled = true;
+            } else {
+                buttonText.style.opacity = '1';
+                buttonLoading.style.display = 'none';
+                loginButton.disabled = false;
+            }
+        }
+
+        // Verificar si hay sesión guardada
+        window.addEventListener('load', function() {
+            const savedUser = localStorage.getItem('cens456_user');
+            const savedSession = localStorage.getItem('cens456_session');
+            
+            if (savedUser && savedSession) {
+                const sessionData = JSON.parse(savedSession);
+                const now = new Date().getTime();
+                
+                // Verificar si la sesión no ha expirado (24 horas)
+                if (now - sessionData.timestamp < 24 * 60 * 60 * 1000) {
+                    window.location.href = 'dashboard.html';
+                } else {
+                    // Limpiar sesión expirada
+                    localStorage.removeItem('cens456_user');
+                    localStorage.removeItem('cens456_session');
+                }
+            }
+        });
+
+        // Manejo del formulario de login
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            hideError();
+            
+            const username = usernameInput.value.trim();
+            const password = passwordInput.value;
+            const remember = rememberCheckbox.checked;
+            
+            // Validación básica
+            if (!username || !password) {
+                showError('Por favor, completa todos los campos.');
+                return;
+            }
+            
+            setLoading(true);
+            
+            // Simular delay de autenticación
+            setTimeout(() => {
+                // Verificar credenciales
+                if (usuarios[username] && usuarios[username].password === password) {
+                    // Login exitoso
+                    const userData = {
+                        username: username,
+                        nombre: usuarios[username].nombre,
+                        role: usuarios[username].role,
+                        loginTime: new Date().toISOString()
+                    };
+                    
+                    // Guardar datos del usuario
+                    localStorage.setItem('cens456_user', JSON.stringify(userData));
+                    
+                    // Guardar sesión si "recordarme" está marcado
+                    if (remember) {
+                        const sessionData = {
+                            timestamp: new Date().getTime(),
+                            remember: true
+                        };
+                        localStorage.setItem('cens456_session', JSON.stringify(sessionData));
+                    }
+                    
+                    // Redirigir al dashboard
+                    window.location.href = 'dashboard.html';
+                } else {
+                    // Login fallido
+                    setLoading(false);
+                    showError('Usuario o contraseña incorrectos.');
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                }
+            }, 1500);
+        });
+
+        // Enter para enviar formulario
+        [usernameInput, passwordInput].forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    loginForm.dispatchEvent(new Event('submit'));
+                }
+            });
+        });
+
+        // Efecto de foco automático
+        usernameInput.focus();
+
+        console.log('🔐 Sistema de Login CENS 456 cargado');
+        console.log('👥 Usuarios disponibles: admin, director, secretaria, preceptor');
+        console.log('🔑 Contraseñas: [usuario]123 (ej: admin123)');
+    </script>
+</body>
+</html>
