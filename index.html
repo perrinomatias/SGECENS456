@@ -325,6 +325,17 @@
                             <p>Lunes a Viernes: 8:00 - 20:00 hs<br>Sábados: 8:00 - 12:00 hs</p>
                         </div>
                     </div>
+                    <div class="contacto-item whatsapp-contact">
+                        <i class="fab fa-whatsapp"></i>
+                        <div>
+                            <h4>WhatsApp</h4>
+                            <p>Chateá con nosotros para más información</p>
+                            <a href="https://wa.me/ais/1151919419567870?s=5" target="_blank" class="whatsapp-link">
+                                <i class="fab fa-whatsapp"></i>
+                                Chatea con CENS 456 - Termina tu secundaria
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 <form class="contacto-form">
                     <div class="form-group">
@@ -348,6 +359,16 @@
                         <textarea id="mensaje" name="mensaje" rows="4" placeholder="Tu mensaje o consulta"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Enviar Consulta</button>
+                    
+                    <div class="contact-alternatives">
+                        <div class="separator">
+                            <span>O también puedes</span>
+                        </div>
+                        <a href="https://wa.me/ais/1151919419567870?s=5" target="_blank" class="btn btn-whatsapp">
+                            <i class="fab fa-whatsapp"></i>
+                            Chatea con CENS 456 - Termina tu secundaria
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>
@@ -361,9 +382,9 @@
                     <h3>CENS 456 Ezeiza</h3>
                     <p>Tu futuro empieza con educación. Completá tu secundario con nosotros y abrí nuevas oportunidades en tu vida.</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/ais/1151919419567870?s=5" target="_blank" title="WhatsApp - Chatea con CENS 456"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
                 <div class="footer-section">
@@ -398,5 +419,42 @@
     </footer>
 
     <script src="script.js"></script>
+    
+    <script>
+        // WhatsApp functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Track WhatsApp clicks
+            const whatsappLinks = document.querySelectorAll('a[href*="wa.me"]');
+            
+            whatsappLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Add a small delay for better UX
+                    console.log('📱 Abriendo WhatsApp para contactar con CENS 456');
+                    
+                    // Optional: Show a loading message
+                    const originalText = this.innerHTML;
+                    if (this.classList.contains('btn-whatsapp')) {
+                        this.innerHTML = '<i class="fab fa-whatsapp"></i> Abriendo WhatsApp...';
+                        
+                        setTimeout(() => {
+                            this.innerHTML = originalText;
+                        }, 2000);
+                    }
+                });
+            });
+            
+            // Add pulse animation to WhatsApp buttons every few seconds
+            setInterval(() => {
+                whatsappLinks.forEach(link => {
+                    if (link.classList.contains('btn-whatsapp')) {
+                        link.style.animation = 'none';
+                        setTimeout(() => {
+                            link.style.animation = '';
+                        }, 100);
+                    }
+                });
+            }, 5000);
+        });
+    </script>
 </body>
 </html>
