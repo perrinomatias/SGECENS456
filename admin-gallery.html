@@ -8,6 +8,68 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            font-size: 1rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
         .admin-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -91,6 +153,7 @@
             border: 1px solid var(--border-color);
             border-radius: 0.5rem;
             margin-bottom: 0.5rem;
+            box-sizing: border-box;
         }
         
         .btn-delete {
@@ -144,6 +207,21 @@
         
         .notification.show {
             transform: translateX(0);
+        }
+
+        #uploadForm input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        #uploadForm input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
     </style>
 </head>
@@ -239,15 +317,7 @@
         const previewImg = document.getElementById('previewImg');
         const currentImagesGrid = document.getElementById('currentImages');
 
-        // Event listeners para drag & drop
-        uploadArea.addEventListener('click', () => fileInput.click());
-        uploadArea.addEventListener('dragover', handleDragOver);
-        uploadArea.addEventListener('drop', handleDrop);
-        uploadArea.addEventListener('dragleave', handleDragLeave);
-        
-        fileInput.addEventListener('change', handleFileSelect);
-        document.getElementById('uploadBtn').addEventListener('click', uploadImage);
-        document.getElementById('cancelBtn').addEventListener('click', cancelUpload);
+        // Los event listeners se configuran en DOMContentLoaded
 
         function handleDragOver(e) {
             e.preventDefault();
@@ -276,45 +346,72 @@
         }
 
         function handleFile(file) {
+            console.log('📁 Archivo seleccionado:', file.name, file.type, file.size);
+            
             if (!file.type.startsWith('image/')) {
+                console.error('❌ Tipo de archivo inválido:', file.type);
                 showNotification('Por favor selecciona un archivo de imagen válido', 'error');
                 return;
             }
 
             if (file.size > 5 * 1024 * 1024) {
+                console.error('❌ Archivo demasiado grande:', file.size);
                 showNotification('El archivo es demasiado grande. Máximo 5MB', 'error');
                 return;
             }
 
             selectedFile = file;
+            console.log('✅ Archivo válido, mostrando preview...');
             
             // Mostrar preview
             const reader = new FileReader();
             reader.onload = (e) => {
+                console.log('✅ FileReader completado, mostrando imagen');
                 previewImg.src = e.target.result;
                 imagePreview.style.display = 'block';
                 uploadForm.style.display = 'block';
+                console.log('✅ Formulario de upload mostrado');
+            };
+            reader.onerror = (e) => {
+                console.error('❌ Error al leer archivo:', e);
+                showNotification('Error al leer el archivo', 'error');
             };
             reader.readAsDataURL(file);
         }
 
         function uploadImage() {
+            console.log('🚀 Iniciando upload...');
+            
             const title = document.getElementById('imageTitle').value.trim();
             const description = document.getElementById('imageDescription').value.trim();
 
+            console.log('📝 Datos del formulario:', { title, description, selectedFile });
+
             if (!title || !description) {
+                console.error('❌ Faltan datos del formulario');
                 showNotification('Por favor completa el título y la descripción', 'error');
                 return;
             }
 
             if (!selectedFile) {
+                console.error('❌ No hay archivo seleccionado');
                 showNotification('Por favor selecciona una imagen', 'error');
                 return;
             }
 
+            console.log('✅ Validación exitosa, procesando imagen...');
+
+            // Mostrar botón de carga
+            const uploadBtn = document.getElementById('uploadBtn');
+            const originalText = uploadBtn.innerHTML;
+            uploadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subiendo...';
+            uploadBtn.disabled = true;
+
             // Simular subida (en un caso real, subirías al servidor)
             const reader = new FileReader();
             reader.onload = (e) => {
+                console.log('✅ Imagen convertida a base64');
+                
                 const newImage = {
                     id: Date.now(),
                     src: e.target.result,
@@ -323,15 +420,30 @@
                     alt: title
                 };
 
+                console.log('💾 Guardando imagen:', newImage.id);
                 galleryImages.unshift(newImage);
                 localStorage.setItem('galleryImages', JSON.stringify(galleryImages));
                 
+                console.log('✅ Imagen guardada exitosamente');
                 showNotification('Imagen subida exitosamente', 'success');
+                
+                // Restaurar botón
+                uploadBtn.innerHTML = originalText;
+                uploadBtn.disabled = false;
+                
                 resetUploadForm();
                 renderCurrentImages();
                 
                 // Actualizar la galería en la página principal si está abierta
                 updateMainGallery();
+            };
+            reader.onerror = (e) => {
+                console.error('❌ Error al procesar imagen:', e);
+                showNotification('Error al procesar la imagen', 'error');
+                
+                // Restaurar botón
+                uploadBtn.innerHTML = originalText;
+                uploadBtn.disabled = false;
             };
             reader.readAsDataURL(selectedFile);
         }
@@ -341,12 +453,26 @@
         }
 
         function resetUploadForm() {
+            console.log('🔄 Reseteando formulario...');
             selectedFile = null;
-            fileInput.value = '';
-            document.getElementById('imageTitle').value = '';
-            document.getElementById('imageDescription').value = '';
-            uploadForm.style.display = 'none';
-            imagePreview.style.display = 'none';
+            
+            const fileInput = document.getElementById('fileInput');
+            const imageTitle = document.getElementById('imageTitle');
+            const imageDescription = document.getElementById('imageDescription');
+            const uploadForm = document.getElementById('uploadForm');
+            const imagePreview = document.getElementById('imagePreview');
+            
+            if (fileInput) fileInput.value = '';
+            if (imageTitle) imageTitle.value = '';
+            if (imageDescription) imageDescription.value = '';
+            if (uploadForm) uploadForm.style.display = 'none';
+            if (imagePreview) imagePreview.style.display = 'none';
+            
+            // Remover clase dragover si existe
+            const uploadArea = document.getElementById('uploadArea');
+            if (uploadArea) uploadArea.classList.remove('dragover');
+            
+            console.log('✅ Formulario reseteado');
         }
 
         function renderCurrentImages() {
@@ -421,7 +547,87 @@
         }
 
         // Cargar imágenes al inicio
-        document.addEventListener('DOMContentLoaded', renderCurrentImages);
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🎨 Inicializando administrador de galería...');
+            
+            // Verificar que todos los elementos existen
+            const elements = {
+                uploadArea: document.getElementById('uploadArea'),
+                fileInput: document.getElementById('fileInput'),
+                uploadBtn: document.getElementById('uploadBtn'),
+                cancelBtn: document.getElementById('cancelBtn'),
+                imageTitle: document.getElementById('imageTitle'),
+                imageDescription: document.getElementById('imageDescription')
+            };
+            
+            console.log('🔍 Elementos DOM:', elements);
+            
+            // Verificar que todos los elementos fueron encontrados
+            for (const [name, element] of Object.entries(elements)) {
+                if (!element) {
+                    console.error(`❌ Elemento no encontrado: ${name}`);
+                    showNotification(`Error: No se pudo cargar la interfaz`, 'error');
+                    return;
+                }
+            }
+            
+            console.log('✅ Todos los elementos DOM encontrados');
+            
+            // Configurar event listeners con verificación
+            try {
+                // Upload area click
+                elements.uploadArea.addEventListener('click', (e) => {
+                    console.log('👆 Click en área de upload');
+                    e.preventDefault();
+                    elements.fileInput.click();
+                });
+                
+                // Drag and drop
+                elements.uploadArea.addEventListener('dragover', handleDragOver);
+                elements.uploadArea.addEventListener('drop', handleDrop);
+                elements.uploadArea.addEventListener('dragleave', handleDragLeave);
+                
+                // File input change
+                elements.fileInput.addEventListener('change', handleFileSelect);
+                
+                // Upload button
+                elements.uploadBtn.addEventListener('click', (e) => {
+                    console.log('🚀 Click en botón upload');
+                    e.preventDefault();
+                    uploadImage();
+                });
+                
+                // Cancel button
+                elements.cancelBtn.addEventListener('click', (e) => {
+                    console.log('❌ Click en botón cancelar');
+                    e.preventDefault();
+                    cancelUpload();
+                });
+                
+                console.log('✅ Event listeners configurados');
+                
+            } catch (error) {
+                console.error('❌ Error configurando event listeners:', error);
+                showNotification('Error al configurar la interfaz', 'error');
+            }
+            
+            // Cargar imágenes existentes
+            renderCurrentImages();
+            console.log('✅ Galería inicializada correctamente');
+            
+            // Mostrar estado de inicialización
+            showNotification('Administrador de galería listo para usar', 'success');
+            
+            // Test básico de funcionalidad
+            setTimeout(() => {
+                const testArea = document.getElementById('uploadArea');
+                if (testArea && testArea.onclick) {
+                    console.log('✅ Test: Upload area clickeable');
+                } else {
+                    console.error('❌ Test: Upload area no responde');
+                }
+            }, 1000);
+        });
     </script>
 </body>
 </html>
