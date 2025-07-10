@@ -309,109 +309,154 @@
             }
         ];
 
-        // Elementos del DOM
-        const uploadArea = document.getElementById('uploadArea');
-        const fileInput = document.getElementById('fileInput');
-        const uploadForm = document.getElementById('uploadForm');
-        const imagePreview = document.getElementById('imagePreview');
-        const previewImg = document.getElementById('previewImg');
-        const currentImagesGrid = document.getElementById('currentImages');
+        // Función para mostrar notificaciones
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type} show`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
 
-        // Los event listeners se configuran en DOMContentLoaded
-
-        function handleDragOver(e) {
-            e.preventDefault();
-            uploadArea.classList.add('dragover');
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
         }
 
-        function handleDragLeave(e) {
-            e.preventDefault();
-            uploadArea.classList.remove('dragover');
-        }
-
-        function handleDrop(e) {
-            e.preventDefault();
-            uploadArea.classList.remove('dragover');
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleFile(files[0]);
-            }
-        }
-
-        function handleFileSelect(e) {
-            const file = e.target.files[0];
-            if (file) {
-                handleFile(file);
-            }
-        }
-
-        function handleFile(file) {
-            console.log('📁 Archivo seleccionado:', file.name, file.type, file.size);
+        // Función principal de inicialización
+        function initGallery() {
+            console.log('🎨 Inicializando galería...');
             
+            const fileInput = document.getElementById('fileInput');
+            const uploadArea = document.getElementById('uploadArea');
+            const uploadBtn = document.getElementById('uploadBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
+            
+            // Verificar elementos críticos
+            if (!fileInput || !uploadArea || !uploadBtn || !cancelBtn) {
+                console.error('❌ Elementos críticos no encontrados');
+                showNotification('Error: No se pudo cargar la interfaz', 'error');
+                return;
+            }
+            
+            console.log('✅ Elementos encontrados');
+            
+            // Event listener para click en área de upload
+            uploadArea.onclick = function(e) {
+                e.preventDefault();
+                console.log('👆 Click en área de upload - activando file input');
+                fileInput.click();
+            };
+            
+            // Event listener para selección de archivo
+            fileInput.onchange = function(e) {
+                const file = e.target.files[0];
+                console.log('📁 Archivo seleccionado:', file);
+                if (file) {
+                    handleFile(file);
+                }
+            };
+            
+            // Event listener para botón de upload
+            uploadBtn.onclick = function(e) {
+                e.preventDefault();
+                console.log('🚀 Click en upload button');
+                uploadImage();
+            };
+            
+            // Event listener para botón cancelar
+            cancelBtn.onclick = function(e) {
+                e.preventDefault();
+                console.log('❌ Click en cancel button');
+                resetForm();
+            };
+            
+            // Drag and drop
+            uploadArea.ondragover = function(e) {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            };
+            
+            uploadArea.ondragleave = function(e) {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+            };
+            
+            uploadArea.ondrop = function(e) {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                const file = e.dataTransfer.files[0];
+                if (file) {
+                    handleFile(file);
+                }
+            };
+            
+            // Cargar imágenes existentes
+            renderImages();
+            
+            console.log('✅ Galería inicializada');
+            showNotification('Galería lista para usar', 'success');
+        }
+
+        // Manejar archivo seleccionado
+        function handleFile(file) {
+            console.log('📁 Procesando archivo:', file.name, file.type, file.size);
+            
+            // Validar tipo de archivo
             if (!file.type.startsWith('image/')) {
-                console.error('❌ Tipo de archivo inválido:', file.type);
-                showNotification('Por favor selecciona un archivo de imagen válido', 'error');
+                console.error('❌ Tipo de archivo inválido');
+                showNotification('Por favor selecciona una imagen válida', 'error');
                 return;
             }
-
+            
+            // Validar tamaño (5MB máximo)
             if (file.size > 5 * 1024 * 1024) {
-                console.error('❌ Archivo demasiado grande:', file.size);
-                showNotification('El archivo es demasiado grande. Máximo 5MB', 'error');
+                console.error('❌ Archivo muy grande');
+                showNotification('La imagen es muy grande (máximo 5MB)', 'error');
                 return;
             }
-
+            
             selectedFile = file;
-            console.log('✅ Archivo válido, mostrando preview...');
+            console.log('✅ Archivo válido');
             
             // Mostrar preview
             const reader = new FileReader();
-            reader.onload = (e) => {
-                console.log('✅ FileReader completado, mostrando imagen');
+            reader.onload = function(e) {
+                const previewImg = document.getElementById('previewImg');
+                const imagePreview = document.getElementById('imagePreview');
+                const uploadForm = document.getElementById('uploadForm');
+                
                 previewImg.src = e.target.result;
                 imagePreview.style.display = 'block';
                 uploadForm.style.display = 'block';
-                console.log('✅ Formulario de upload mostrado');
-            };
-            reader.onerror = (e) => {
-                console.error('❌ Error al leer archivo:', e);
-                showNotification('Error al leer el archivo', 'error');
+                
+                console.log('✅ Preview mostrado');
             };
             reader.readAsDataURL(file);
         }
 
+        // Subir imagen
         function uploadImage() {
             console.log('🚀 Iniciando upload...');
             
             const title = document.getElementById('imageTitle').value.trim();
             const description = document.getElementById('imageDescription').value.trim();
-
-            console.log('📝 Datos del formulario:', { title, description, selectedFile });
-
+            
             if (!title || !description) {
-                console.error('❌ Faltan datos del formulario');
-                showNotification('Por favor completa el título y la descripción', 'error');
+                showNotification('Por favor completa título y descripción', 'error');
                 return;
             }
-
+            
             if (!selectedFile) {
-                console.error('❌ No hay archivo seleccionado');
-                showNotification('Por favor selecciona una imagen', 'error');
+                showNotification('No hay imagen seleccionada', 'error');
                 return;
             }
-
-            console.log('✅ Validación exitosa, procesando imagen...');
-
-            // Mostrar botón de carga
+            
             const uploadBtn = document.getElementById('uploadBtn');
-            const originalText = uploadBtn.innerHTML;
             uploadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subiendo...';
             uploadBtn.disabled = true;
-
-            // Simular subida (en un caso real, subirías al servidor)
+            
+            // Convertir a base64 y guardar
             const reader = new FileReader();
-            reader.onload = (e) => {
-                console.log('✅ Imagen convertida a base64');
-                
+            reader.onload = function(e) {
                 const newImage = {
                     id: Date.now(),
                     src: e.target.result,
@@ -419,76 +464,49 @@
                     description: description,
                     alt: title
                 };
-
-                console.log('💾 Guardando imagen:', newImage.id);
+                
                 galleryImages.unshift(newImage);
                 localStorage.setItem('galleryImages', JSON.stringify(galleryImages));
                 
-                console.log('✅ Imagen guardada exitosamente');
-                showNotification('Imagen subida exitosamente', 'success');
+                console.log('✅ Imagen guardada');
+                showNotification('¡Imagen subida exitosamente!', 'success');
                 
-                // Restaurar botón
-                uploadBtn.innerHTML = originalText;
-                uploadBtn.disabled = false;
+                resetForm();
+                renderImages();
                 
-                resetUploadForm();
-                renderCurrentImages();
-                
-                // Actualizar la galería en la página principal si está abierta
-                updateMainGallery();
-            };
-            reader.onerror = (e) => {
-                console.error('❌ Error al procesar imagen:', e);
-                showNotification('Error al procesar la imagen', 'error');
-                
-                // Restaurar botón
-                uploadBtn.innerHTML = originalText;
+                uploadBtn.innerHTML = '<i class="fas fa-upload"></i> Subir Imagen';
                 uploadBtn.disabled = false;
             };
             reader.readAsDataURL(selectedFile);
         }
 
-        function cancelUpload() {
-            resetUploadForm();
-        }
-
-        function resetUploadForm() {
-            console.log('🔄 Reseteando formulario...');
+        // Resetear formulario
+        function resetForm() {
             selectedFile = null;
-            
-            const fileInput = document.getElementById('fileInput');
-            const imageTitle = document.getElementById('imageTitle');
-            const imageDescription = document.getElementById('imageDescription');
-            const uploadForm = document.getElementById('uploadForm');
-            const imagePreview = document.getElementById('imagePreview');
-            
-            if (fileInput) fileInput.value = '';
-            if (imageTitle) imageTitle.value = '';
-            if (imageDescription) imageDescription.value = '';
-            if (uploadForm) uploadForm.style.display = 'none';
-            if (imagePreview) imagePreview.style.display = 'none';
-            
-            // Remover clase dragover si existe
-            const uploadArea = document.getElementById('uploadArea');
-            if (uploadArea) uploadArea.classList.remove('dragover');
-            
-            console.log('✅ Formulario reseteado');
+            document.getElementById('fileInput').value = '';
+            document.getElementById('imageTitle').value = '';
+            document.getElementById('imageDescription').value = '';
+            document.getElementById('uploadForm').style.display = 'none';
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('uploadArea').classList.remove('dragover');
         }
 
-        function renderCurrentImages() {
-            currentImagesGrid.innerHTML = '';
+        // Renderizar imágenes
+        function renderImages() {
+            const grid = document.getElementById('currentImages');
+            grid.innerHTML = '';
             
             galleryImages.forEach(image => {
-                const imageItem = document.createElement('div');
-                imageItem.className = 'admin-image-item';
-                imageItem.innerHTML = `
+                const div = document.createElement('div');
+                div.className = 'admin-image-item';
+                div.innerHTML = `
                     <img src="${image.src}" alt="${image.alt}">
                     <div class="image-controls">
                         <div class="image-meta">
-                            <input type="text" value="${image.title}" onchange="updateImageMeta(${image.id}, 'title', this.value)">
-                            <input type="text" value="${image.description}" onchange="updateImageMeta(${image.id}, 'description', this.value)">
+                            <input type="text" value="${image.title}" onchange="updateImage(${image.id}, 'title', this.value)">
+                            <input type="text" value="${image.description}" onchange="updateImage(${image.id}, 'description', this.value)">
                         </div>
-                        <button class="btn-save" onclick="saveImageMeta(${image.id})">
+                        <button class="btn-save" onclick="saveImage(${image.id})">
                             <i class="fas fa-save"></i> Guardar
                         </button>
                         <button class="btn-delete" onclick="deleteImage(${image.id})">
@@ -496,138 +514,40 @@
                         </button>
                     </div>
                 `;
-                currentImagesGrid.appendChild(imageItem);
+                grid.appendChild(div);
             });
         }
 
-        function updateImageMeta(id, field, value) {
+        // Actualizar metadatos de imagen
+        function updateImage(id, field, value) {
             const image = galleryImages.find(img => img.id === id);
             if (image) {
                 image[field] = value;
             }
         }
 
-        function saveImageMeta(id) {
+        // Guardar cambios
+        function saveImage(id) {
             localStorage.setItem('galleryImages', JSON.stringify(galleryImages));
             showNotification('Cambios guardados', 'success');
-            updateMainGallery();
         }
 
+        // Eliminar imagen
         function deleteImage(id) {
-            if (confirm('¿Estás seguro de que quieres eliminar esta imagen?')) {
+            if (confirm('¿Eliminar esta imagen?')) {
                 galleryImages = galleryImages.filter(img => img.id !== id);
                 localStorage.setItem('galleryImages', JSON.stringify(galleryImages));
-                renderCurrentImages();
-                updateMainGallery();
+                renderImages();
                 showNotification('Imagen eliminada', 'success');
             }
         }
 
-        function updateMainGallery() {
-            // Actualizar la galería en localStorage para que se refleje en la página principal
-            localStorage.setItem('galleryImages', JSON.stringify(galleryImages));
+        // Inicializar cuando el DOM esté listo
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initGallery);
+        } else {
+            initGallery();
         }
-
-        function showNotification(message, type) {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.textContent = message;
-            document.body.appendChild(notification);
-
-            setTimeout(() => {
-                notification.classList.add('show');
-            }, 100);
-
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 3000);
-        }
-
-        // Cargar imágenes al inicio
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🎨 Inicializando administrador de galería...');
-            
-            // Verificar que todos los elementos existen
-            const elements = {
-                uploadArea: document.getElementById('uploadArea'),
-                fileInput: document.getElementById('fileInput'),
-                uploadBtn: document.getElementById('uploadBtn'),
-                cancelBtn: document.getElementById('cancelBtn'),
-                imageTitle: document.getElementById('imageTitle'),
-                imageDescription: document.getElementById('imageDescription')
-            };
-            
-            console.log('🔍 Elementos DOM:', elements);
-            
-            // Verificar que todos los elementos fueron encontrados
-            for (const [name, element] of Object.entries(elements)) {
-                if (!element) {
-                    console.error(`❌ Elemento no encontrado: ${name}`);
-                    showNotification(`Error: No se pudo cargar la interfaz`, 'error');
-                    return;
-                }
-            }
-            
-            console.log('✅ Todos los elementos DOM encontrados');
-            
-            // Configurar event listeners con verificación
-            try {
-                // Upload area click
-                elements.uploadArea.addEventListener('click', (e) => {
-                    console.log('👆 Click en área de upload');
-                    e.preventDefault();
-                    elements.fileInput.click();
-                });
-                
-                // Drag and drop
-                elements.uploadArea.addEventListener('dragover', handleDragOver);
-                elements.uploadArea.addEventListener('drop', handleDrop);
-                elements.uploadArea.addEventListener('dragleave', handleDragLeave);
-                
-                // File input change
-                elements.fileInput.addEventListener('change', handleFileSelect);
-                
-                // Upload button
-                elements.uploadBtn.addEventListener('click', (e) => {
-                    console.log('🚀 Click en botón upload');
-                    e.preventDefault();
-                    uploadImage();
-                });
-                
-                // Cancel button
-                elements.cancelBtn.addEventListener('click', (e) => {
-                    console.log('❌ Click en botón cancelar');
-                    e.preventDefault();
-                    cancelUpload();
-                });
-                
-                console.log('✅ Event listeners configurados');
-                
-            } catch (error) {
-                console.error('❌ Error configurando event listeners:', error);
-                showNotification('Error al configurar la interfaz', 'error');
-            }
-            
-            // Cargar imágenes existentes
-            renderCurrentImages();
-            console.log('✅ Galería inicializada correctamente');
-            
-            // Mostrar estado de inicialización
-            showNotification('Administrador de galería listo para usar', 'success');
-            
-            // Test básico de funcionalidad
-            setTimeout(() => {
-                const testArea = document.getElementById('uploadArea');
-                if (testArea && testArea.onclick) {
-                    console.log('✅ Test: Upload area clickeable');
-                } else {
-                    console.error('❌ Test: Upload area no responde');
-                }
-            }, 1000);
-        });
     </script>
 </body>
 </html>
