@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, observerOptions);
 
     // Elementos a animar
-    const animatedElements = document.querySelectorAll('.card, .modalidad-card, .testimonio, .step, .requisito');
+    const animatedElements = document.querySelectorAll('.card, .modalidad-card, .step, .requisito, .proyecto-card');
     animatedElements.forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
@@ -127,48 +127,7 @@ document.addEventListener('DOMContentLoaded', function() {
         heroObserver.observe(heroStats);
     }
 
-    // Form handling
-    const contactForm = document.querySelector('.contacto-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Validación básica
-            const nombre = document.getElementById('nombre').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const modalidad = document.getElementById('modalidad').value;
-            
-            if (!nombre || !email || !modalidad) {
-                showNotification('Por favor, completá todos los campos requeridos.', 'error');
-                return;
-            }
-            
-            if (!isValidEmail(email)) {
-                showNotification('Por favor, ingresá un email válido.', 'error');
-                return;
-            }
-            
-            // Simular envío del formulario
-            const submitButton = contactForm.querySelector('button[type="submit"]');
-            const originalText = submitButton.textContent;
-            
-            submitButton.textContent = 'Enviando...';
-            submitButton.disabled = true;
-            
-            setTimeout(() => {
-                showNotification('¡Mensaje enviado con éxito! Nos contactaremos pronto contigo.', 'success');
-                contactForm.reset();
-                submitButton.textContent = originalText;
-                submitButton.disabled = false;
-            }, 2000);
-        });
-    }
 
-    // Función para validar email
-    function isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
 
     // Sistema de notificaciones
     function showNotification(message, type = 'info') {
