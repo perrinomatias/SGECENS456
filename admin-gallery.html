@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración de Galería - CENS 456</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .admin-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .upload-section {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .file-upload-area {
+            border: 2px dashed var(--primary-color);
+            border-radius: 1rem;
+            padding: 3rem;
+            text-align: center;
+            background: white;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .file-upload-area:hover {
+            background: var(--bg-light);
+            border-color: var(--primary-dark);
+        }
+        
+        .file-upload-area.dragover {
+            background: rgba(37, 99, 235, 0.1);
+            border-color: var(--primary-dark);
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .current-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .admin-image-item {
+            position: relative;
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .admin-image-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .image-controls {
+            padding: 1rem;
+        }
+        
+        .image-meta {
+            margin-bottom: 1rem;
+        }
+        
+        .image-meta input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .btn-delete:hover {
+            background: #dc2626;
+        }
+        
+        .btn-save {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            margin-right: 0.5rem;
+        }
+        
+        .btn-save:hover {
+            background: var(--primary-dark);
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.success {
+            background: #10b981;
+        }
+        
+        .notification.error {
+            background: #ef4444;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body style="background: var(--bg-light); padding: 2rem 0;">
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1><i class="fas fa-images"></i> Administración de Galería</h1>
+            <p>Gestiona las imágenes que aparecen en la galería del sitio web</p>
+            <a href="index.html" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Volver al sitio
+            </a>
+        </div>
+
+        <div class="upload-section">
+            <h2><i class="fas fa-cloud-upload-alt"></i> Subir Nueva Imagen</h2>
+            <div class="file-upload-area" id="uploadArea">
+                <div class="upload-icon">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                </div>
+                <h3>Arrastra una imagen aquí o haz click para seleccionar</h3>
+                <p>Formatos soportados: JPG, PNG, WebP (máximo 5MB)</p>
+                <input type="file" id="fileInput" accept="image/*" style="display: none;">
+            </div>
+            
+            <div id="uploadForm" style="display: none; margin-top: 2rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                    <input type="text" id="imageTitle" placeholder="Título de la imagen" required>
+                    <input type="text" id="imageDescription" placeholder="Descripción" required>
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button id="uploadBtn" class="btn btn-primary">
+                        <i class="fas fa-upload"></i> Subir Imagen
+                    </button>
+                    <button id="cancelBtn" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+            
+            <div id="imagePreview" style="display: none; margin-top: 1rem;">
+                <img id="previewImg" style="max-width: 300px; border-radius: 0.5rem;">
+            </div>
+        </div>
+
+        <div class="current-images-section">
+            <h2><i class="fas fa-photo-video"></i> Imágenes Actuales</h2>
+            <div class="current-images" id="currentImages">
+                <!-- Las imágenes se cargarán dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedFile = null;
+        
+        // Simulamos una base de datos local de imágenes
+        let galleryImages = JSON.parse(localStorage.getItem('galleryImages')) || [
+            {
+                id: 1,
+                src: 'https://via.placeholder.com/400x300/2563eb/ffffff?text=CENS+456',
+                title: 'Actividades Académicas',
+                description: 'Estudiantes participando en clases',
+                alt: 'Actividad escolar'
+            },
+            {
+                id: 2,
+                src: 'https://via.placeholder.com/400x300/f59e0b/ffffff?text=Proyectos',
+                title: 'Proyectos Especiales',
+                description: 'Microemprendimientos estudiantiles',
+                alt: 'Proyectos estudiantiles'
+            },
+            {
+                id: 3,
+                src: 'https://via.placeholder.com/400x300/10b981/ffffff?text=Parlamento',
+                title: 'Parlamento de Jóvenes',
+                description: 'Debates y participación ciudadana',
+                alt: 'Parlamento juvenil'
+            },
+            {
+                id: 4,
+                src: 'https://via.placeholder.com/400x300/8b5cf6/ffffff?text=Graduación',
+                title: 'Graduaciones',
+                description: 'Celebrando el logro de nuestros estudiantes',
+                alt: 'Ceremonia de graduación'
+            }
+        ];
+
+        // Elementos del DOM
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const uploadForm = document.getElementById('uploadForm');
+        const imagePreview = document.getElementById('imagePreview');
+        const previewImg = document.getElementById('previewImg');
+        const currentImagesGrid = document.getElementById('currentImages');
+
+        // Event listeners para drag & drop
+        uploadArea.addEventListener('click', () => fileInput.click());
+        uploadArea.addEventListener('dragover', handleDragOver);
+        uploadArea.addEventListener('drop', handleDrop);
+        uploadArea.addEventListener('dragleave', handleDragLeave);
+        
+        fileInput.addEventListener('change', handleFileSelect);
+        document.getElementById('uploadBtn').addEventListener('click', uploadImage);
+        document.getElementById('cancelBtn').addEventListener('click', cancelUpload);
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        }
+
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                handleFile(file);
+            }
+        }
+
+        function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                showNotification('Por favor selecciona un archivo de imagen válido', 'error');
+                return;
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+                showNotification('El archivo es demasiado grande. Máximo 5MB', 'error');
+                return;
+            }
+
+            selectedFile = file;
+            
+            // Mostrar preview
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImg.src = e.target.result;
+                imagePreview.style.display = 'block';
+                uploadForm.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function uploadImage() {
+            const title = document.getElementById('imageTitle').value.trim();
+            const description = document.getElementById('imageDescription').value.trim();
+
+            if (!title || !description) {
+                showNotification('Por favor completa el título y la descripción', 'error');
+                return;
+            }
+
+            if (!selectedFile) {
+                showNotification('Por favor selecciona una imagen', 'error');
+                return;
+            }
+
+            // Simular subida (en un caso real, subirías al servidor)
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const newImage = {
+                    id: Date.now(),
+                    src: e.target.result,
+                    title: title,
+                    description: description,
+                    alt: title
+                };
+
+                galleryImages.unshift(newImage);
+                localStorage.setItem('galleryImages', JSON.stringify(galleryImages));
+                
+                showNotification('Imagen subida exitosamente', 'success');
+                resetUploadForm();
+                renderCurrentImages();
+                
+                // Actualizar la galería en la página principal si está abierta
+                updateMainGallery();
+            };
+            reader.readAsDataURL(selectedFile);
+        }
+
+        function cancelUpload() {
+            resetUploadForm();
+        }
+
+        function resetUploadForm() {
+            selectedFile = null;
+            fileInput.value = '';
+            document.getElementById('imageTitle').value = '';
+            document.getElementById('imageDescription').value = '';
+            uploadForm.style.display = 'none';
+            imagePreview.style.display = 'none';
+        }
+
+        function renderCurrentImages() {
+            currentImagesGrid.innerHTML = '';
+            
+            galleryImages.forEach(image => {
+                const imageItem = document.createElement('div');
+                imageItem.className = 'admin-image-item';
+                imageItem.innerHTML = `
+                    <img src="${image.src}" alt="${image.alt}">
+                    <div class="image-controls">
+                        <div class="image-meta">
+                            <input type="text" value="${image.title}" onchange="updateImageMeta(${image.id}, 'title', this.value)">
+                            <input type="text" value="${image.description}" onchange="updateImageMeta(${image.id}, 'description', this.value)">
+                        </div>
+                        <button class="btn-save" onclick="saveImageMeta(${image.id})">
+                            <i class="fas fa-save"></i> Guardar
+                        </button>
+                        <button class="btn-delete" onclick="deleteImage(${image.id})">
+                            <i class="fas fa-trash"></i> Eliminar
+                        </button>
+                    </div>
+                `;
+                currentImagesGrid.appendChild(imageItem);
+            });
+        }
+
+        function updateImageMeta(id, field, value) {
+            const image = galleryImages.find(img => img.id === id);
+            if (image) {
+                image[field] = value;
+            }
+        }
+
+        function saveImageMeta(id) {
+            localStorage.setItem('galleryImages', JSON.stringify(galleryImages));
+            showNotification('Cambios guardados', 'success');
+            updateMainGallery();
+        }
+
+        function deleteImage(id) {
+            if (confirm('¿Estás seguro de que quieres eliminar esta imagen?')) {
+                galleryImages = galleryImages.filter(img => img.id !== id);
+                localStorage.setItem('galleryImages', JSON.stringify(galleryImages));
+                renderCurrentImages();
+                updateMainGallery();
+                showNotification('Imagen eliminada', 'success');
+            }
+        }
+
+        function updateMainGallery() {
+            // Actualizar la galería en localStorage para que se refleje en la página principal
+            localStorage.setItem('galleryImages', JSON.stringify(galleryImages));
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Cargar imágenes al inicio
+        document.addEventListener('DOMContentLoaded', renderCurrentImages);
+    </script>
+</body>
+</html>
