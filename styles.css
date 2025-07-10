@@ -460,6 +460,95 @@ p {
     font-size: 0.9rem;
 }
 
+.modalidad-info {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow-md);
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.modalidad-info h3 {
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+}
+
+.modalidad-info p {
+    margin: 0.5rem 0;
+    color: var(--text-light);
+}
+
+/* Proyectos Section */
+.proyectos {
+    padding: 5rem 0;
+    background: white;
+}
+
+.proyectos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.proyecto-card {
+    background: var(--bg-light);
+    padding: 2.5rem;
+    border-radius: 1rem;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.proyecto-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    background: white;
+}
+
+.proyecto-icon {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.proyecto-icon i {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+}
+
+.proyecto-card h3 {
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.proyecto-card p {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.proyecto-card ul {
+    list-style: none;
+    margin: 0;
+}
+
+.proyecto-card li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-dark);
+    font-size: 0.9rem;
+}
+
+.proyecto-card li::before {
+    content: '•';
+    color: var(--accent-color);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
 /* Inscripción Section */
 .inscripcion {
     padding: 5rem 0;
@@ -824,9 +913,13 @@ p {
     .modalidades-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .modalidad-card.featured {
         transform: none;
+    }
+
+    .proyectos-grid {
+        grid-template-columns: 1fr;
     }
 }
 
