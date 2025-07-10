@@ -686,6 +686,12 @@
                             Docentes
                         </a>
                     </div>
+                    <div class="nav-item" id="navGaleria">
+                        <a href="admin-gallery.html" class="nav-link" target="_blank">
+                            <i class="fas fa-images"></i>
+                            Galería
+                        </a>
+                    </div>
                     <div class="nav-item">
                         <a href="#" class="nav-link" data-section="reportes">
                             <i class="fas fa-chart-bar"></i>
@@ -841,6 +847,29 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Administración de Galería -->
+                        <div class="action-card primary" data-app="galeria" id="galeriaCard">
+                            <div class="action-header">
+                                <div class="action-icon primary">
+                                    <i class="fas fa-images"></i>
+                                </div>
+                                <div class="action-info">
+                                    <h3>Galería de Imágenes</h3>
+                                    <p>Administra las fotos que aparecen en la galería del sitio web</p>
+                                </div>
+                            </div>
+                            <div class="action-footer">
+                                <a href="admin-gallery.html" class="action-link" target="_blank">
+                                    Administrar Galería
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                                <div class="action-status">
+                                    <span class="status-dot"></span>
+                                    Disponible
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </div>
@@ -879,7 +908,7 @@
 
         // Configuración de permisos por rol
         const rolePermissions = {
-            'administrador': ['principal', 'carga', 'alertas'], // Acceso completo
+            'administrador': ['principal', 'carga', 'alertas', 'galeria'], // Acceso completo
             'preceptor': ['principal', 'alertas'], // Gestión y alertas
             'dicyt': ['principal', 'alertas'], // Gestión y alertas  
             'profesor': ['carga'] // Solo carga de notas
@@ -916,14 +945,16 @@
             const navElements = {
                 'principal': document.getElementById('navPrincipal'),
                 'carga': document.getElementById('navCarga'),
-                'alertas': document.getElementById('navAlertas')
+                'alertas': document.getElementById('navAlertas'),
+                'galeria': document.getElementById('navGaleria') // Add galeria nav item
             };
             
             // Elementos de las tarjetas
             const cardElements = {
                 'principal': document.getElementById('sistemaPrincipalCard'),
                 'carga': document.getElementById('cargaNotasCard'),
-                'alertas': document.getElementById('alertasCard')
+                'alertas': document.getElementById('alertasCard'),
+                'galeria': document.getElementById('galeriaCard') // Add galeria card
             };
             
             // Ocultar/mostrar elementos según permisos

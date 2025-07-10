@@ -68,13 +68,112 @@ document.addEventListener('DOMContentLoaded', function() {
     }, observerOptions);
 
     // Elementos a animar
-    const animatedElements = document.querySelectorAll('.card, .modalidad-card, .step, .requisito, .proyecto-card');
+    const animatedElements = document.querySelectorAll('.card, .modalidad-card, .step, .requisito, .proyecto-card, .galeria-item');
     animatedElements.forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
         el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(el);
     });
+
+    // Gallery functionality
+    function loadGalleryImages() {
+        const galleryGrid = document.getElementById('galeriaGrid');
+        if (!galleryGrid) return;
+
+        const savedImages = localStorage.getItem('galleryImages');
+        if (savedImages) {
+            const images = JSON.parse(savedImages);
+            galleryGrid.innerHTML = '';
+            
+            images.forEach(image => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'galeria-item';
+                galleryItem.innerHTML = `
+                    <img src="${image.src}" alt="${image.alt}" loading="lazy">
+                    <div class="galeria-overlay">
+                        <h4>${image.title}</h4>
+                        <p>${image.description}</p>
+                    </div>
+                `;
+                galleryGrid.appendChild(galleryItem);
+                
+                // Agregar animación al nuevo elemento
+                galleryItem.style.opacity = '0';
+                galleryItem.style.transform = 'translateY(30px)';
+                galleryItem.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(galleryItem);
+            });
+        }
+    }
+
+    // Cargar galería al inicio
+    loadGalleryImages();
+
+    // Escuchar cambios en localStorage para actualizar la galería en tiempo real
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'galleryImages') {
+            loadGalleryImages();
+        }
+    });
+
+    // Funcionalidad de modal para ampliar imágenes
+    function createImageModal() {
+        const modal = document.createElement('div');
+        modal.id = 'imageModal';
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            cursor: pointer;
+        `;
+        
+        modal.innerHTML = `
+            <div style="position: relative; max-width: 90%; max-height: 90%;">
+                <img id="modalImage" style="width: 100%; height: auto; border-radius: 1rem;">
+                <button id="closeModal" style="position: absolute; top: -40px; right: 0; background: white; border: none; border-radius: 50%; width: 35px; height: 35px; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Event listeners para el modal
+        modal.addEventListener('click', closeImageModal);
+        document.getElementById('closeModal').addEventListener('click', closeImageModal);
+        
+        // Cerrar con ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeImageModal();
+            }
+        });
+        
+        function closeImageModal() {
+            modal.style.display = 'none';
+        }
+        
+        // Agregar event listeners a las imágenes de la galería
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.galeria-item')) {
+                const img = e.target.closest('.galeria-item').querySelector('img');
+                if (img) {
+                    document.getElementById('modalImage').src = img.src;
+                    modal.style.display = 'flex';
+                }
+            }
+        });
+    }
+    
+    createImageModal();
 
     // Counter animation para las estadísticas del hero
     const counters = document.querySelectorAll('.stat-number');
