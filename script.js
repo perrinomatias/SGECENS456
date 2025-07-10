@@ -356,56 +356,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('scroll', highlightNavigation);
 
-    // Add CSS for active nav links
-    const style = document.createElement('style');
-    style.textContent = `
-        .nav-link.active {
-            color: var(--primary-color) !important;
-            font-weight: 600;
-        }
-        
-        .nav-link.active::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--primary-color);
-        }
-        
-        .nav-link {
-            position: relative;
-        }
-        
-        @media (max-width: 768px) {
-            .nav-menu.active {
-                display: flex;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: white;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-                padding: 1rem;
-                gap: 1rem;
-            }
-            
-            .nav-toggle.active span:nth-child(1) {
-                transform: rotate(45deg) translate(5px, 5px);
-            }
-            
-            .nav-toggle.active span:nth-child(2) {
-                opacity: 0;
-            }
-            
-            .nav-toggle.active span:nth-child(3) {
-                transform: rotate(-45deg) translate(7px, -6px);
-            }
-        }
-    `;
-    document.head.appendChild(style);
-
     console.log('🎓 CENS 456 Landing Page cargada correctamente!');
 });
