@@ -114,6 +114,7 @@ p {
     padding: 1rem;
     max-width: 1200px;
     margin: 0 auto;
+    position: relative;
 }
 
 .nav-logo {
@@ -172,6 +173,7 @@ p {
     flex-direction: column;
     cursor: pointer;
     gap: 4px;
+    order: -1;
 }
 
 .nav-toggle span {
@@ -685,68 +687,7 @@ p {
     color: var(--text-light);
 }
 
-/* Testimonios Section */
-.testimonios {
-    padding: 5rem 0;
-    background: var(--bg-light);
-}
 
-.testimonios-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-}
-
-.testimonio {
-    background: white;
-    padding: 2rem;
-    border-radius: 1rem;
-    box-shadow: var(--shadow-md);
-    border: 1px solid var(--border-color);
-    transition: all 0.3s ease;
-}
-
-.testimonio:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-}
-
-.testimonio-content {
-    margin-bottom: 1.5rem;
-}
-
-.testimonio-content p {
-    font-style: italic;
-    color: var(--text-dark);
-    font-size: 1.05rem;
-    line-height: 1.6;
-    margin: 0;
-}
-
-.testimonio-content p::before {
-    content: '"';
-    color: var(--primary-color);
-    font-size: 2rem;
-    font-weight: bold;
-}
-
-.testimonio-content p::after {
-    content: '"';
-    color: var(--primary-color);
-    font-size: 2rem;
-    font-weight: bold;
-}
-
-.author-info h4 {
-    color: var(--text-dark);
-    margin-bottom: 0.25rem;
-    font-size: 1rem;
-}
-
-.author-info span {
-    color: var(--text-light);
-    font-size: 0.875rem;
-}
 
 /* Contact Section */
 .contacto {
@@ -758,6 +699,14 @@ p {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
+}
+
+.contacto-info-only {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .contacto-info {
@@ -922,6 +871,11 @@ p {
         gap: 2rem;
     }
     
+    .contacto-info-only {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
     .hero-title {
         font-size: 2.5rem;
     }
@@ -1006,10 +960,6 @@ p {
     
     h2 {
         font-size: 2rem;
-    }
-    
-    .testimonios-grid {
-        grid-template-columns: 1fr;
     }
     
     .footer-content {
