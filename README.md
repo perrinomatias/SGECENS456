@@ -7,7 +7,9 @@ Este repositorio contiene el sistema web completo del CENS 456 Ezeiza, que inclu
 
 1. **Sitio Web Institucional** - Landing page informativa del centro educativo
 2. **Sistema de Login** - Portal de autenticación para personal autorizado
-3. **Dashboard de Gestión** - Panel de control con acceso a herramientas de Google Apps Script
+3. **Sistema de Registro** - Registro completo de nuevos usuarios
+4. **Dashboard de Gestión** - Panel de control completamente funcional con gestión de datos
+5. **Google Apps Script** - Integración con herramientas externas
 
 ## 🚀 Características Principales
 
@@ -27,14 +29,32 @@ Este repositorio contiene el sistema web completo del CENS 456 Ezeiza, que inclu
 - Validación en tiempo real
 - Auto-logout por inactividad
 
+### Sistema de Registro (`register.html`)
+- **🆕 NUEVO** - Registro completo de usuarios
+- Validación robusta de datos
+- Medidor de fuerza de contraseña
+- Verificación de disponibilidad de usuario
+- Múltiples roles disponibles
+- Integración automática con login
+
 ### Dashboard de Gestión (`dashboard.html`)
-- Panel de control moderno
+- **🆕 COMPLETAMENTE FUNCIONAL** - Panel de control completo
+- **Gestión de Estudiantes** - CRUD completo con búsqueda y filtros
+- **Gestión de Docentes** - Administración de profesores
+- **Sistema de Reportes** - Gráficos dinámicos con Canvas
+- **Configuración de Perfil** - Edición de datos y cambio de contraseña
 - Acceso directo a 3 Google Apps Script
-- Navegación intuitiva
-- Responsive design
-- Estadísticas en tiempo real
+- Navegación intuitiva y responsive
+- Datos persistentes en localStorage
 
 ## 🔐 Sistema de Autenticación
+
+### 👤 Sistema de Registro
+- **🆕 Registro dinámico** - Los usuarios pueden registrarse desde `register.html`
+- **Validación robusta** - Verificación de email, usuario único y contraseña segura
+- **Medidor de seguridad** - Indicador visual de fuerza de contraseña
+- **Roles disponibles** - Profesor, Preceptor, DICYT, Administrador
+- **Integración completa** - Los usuarios registrados pueden acceder inmediatamente
 
 ### Usuarios Predefinidos
 
@@ -44,6 +64,8 @@ Este repositorio contiene el sistema web completo del CENS 456 Ezeiza, que inclu
 | `preceptor` | `preceptor123` | Preceptor     | ✅ Gestión + ❌ Notas + ✅ Alertas     |
 | `dicyt`     | `dicyt123`     | DICYT         | ✅ Gestión + ❌ Notas + ✅ Alertas     |
 | `profesor`  | `profesor123`  | Profesor      | ❌ Gestión + ✅ Notas + ❌ Alertas     |
+
+*Nota: Además de estos usuarios predefinidos, cualquier persona puede registrarse usando el formulario de registro.*
 
 ### Funcionalidades de Seguridad
 - ✅ Validación de credenciales
@@ -75,7 +97,42 @@ Este repositorio contiene el sistema web completo del CENS 456 Ezeiza, que inclu
 - **Funciones:** Registro de calificaciones
 - **Uso:** Evaluación de estudiantes
 
-## 🔗 Google Apps Script Integrados
+## � Dashboard Completamente Funcional
+
+### 🎯 Funcionalidades Implementadas
+
+#### 👥 **Gestión de Estudiantes**
+- ✅ **CRUD Completo** - Crear, leer, actualizar y eliminar estudiantes
+- ✅ **Búsqueda en tiempo real** - Filtro por nombre instantáneo
+- ✅ **Filtros avanzados** - Por modalidad (presencial, semipresencial, acelerado) y curso
+- ✅ **Tarjetas informativas** - Visualización clara de datos del estudiante
+- ✅ **Datos persistentes** - Almacenamiento local automático
+
+#### 👨‍🏫 **Gestión de Docentes**
+- ✅ **CRUD Completo** - Administración completa de profesores
+- ✅ **Especialidades** - Registro de materias y especialidades
+- ✅ **Modalidades** - Asignación a diferentes modalidades de enseñanza
+- ✅ **Datos de contacto** - Email y teléfono para comunicación
+
+#### 📈 **Sistema de Reportes**
+- ✅ **Gráficos dinámicos** - Visualización usando Canvas nativo
+- ✅ **Rendimiento académico** - Estadísticas por año y modalidad
+- ✅ **Distribución por modalidad** - Gráfico de torta con porcentajes
+- ✅ **Actualización automática** - Los gráficos se regeneran con nuevos datos
+
+#### ⚙️ **Configuración de Perfil**
+- ✅ **Edición de datos** - Actualización de nombre y email
+- ✅ **Cambio de contraseña** - Sistema seguro con validación
+- ✅ **Validación robusta** - Verificación de contraseña actual
+- ✅ **Persistencia** - Los cambios se guardan automáticamente
+
+### 💾 **Sistema de Datos**
+- **localStorage** - Almacenamiento local para máxima compatibilidad
+- **Datos de ejemplo** - Se cargan automáticamente si no existen datos
+- **Sincronización** - Las estadísticas se actualizan en tiempo real
+- **Respaldo automático** - Los datos persisten entre sesiones
+
+## �🔗 Google Apps Script Integrados
 
 El sistema permite acceso directo a tres aplicaciones de Google Apps Script:
 
@@ -110,7 +167,9 @@ El sistema incluye integración completa con WhatsApp para facilitar el contacto
 SGECENS456/
 ├── index.html          # Sitio web institucional
 ├── login.html          # Sistema de autenticación
-├── dashboard.html      # Panel de gestión
+├── register.html       # 🆕 Sistema de registro de usuarios
+├── dashboard.html      # Panel de gestión completo
+├── test.html          # Página de testing y documentación
 ├── styles.css          # Estilos del sitio principal
 ├── script.js           # JavaScript del sitio principal
 └── README.md          # Documentación
@@ -208,10 +267,17 @@ vercel --prod
 
 ## 📊 Estadísticas del Sistema
 
-- 👥 **450 Estudiantes** registrados
-- 👨‍🏫 **28 Docentes** activos
-- 📚 **12 Cursos** disponibles
-- 🎓 **500+ Egresados** exitosos
+### 📈 Datos Dinámicos
+- 👥 **Estudiantes** - Cantidad actualizada en tiempo real según registros
+- 👨‍🏫 **Docentes** - Número dinámico basado en profesores registrados  
+- 📚 **12 Cursos** - Estructura de 3 años en 4 modalidades
+- 🎓 **500+ Egresados** - Histórico de graduados exitosos
+
+### 💾 Almacenamiento
+- **localStorage** - Todos los datos se guardan localmente
+- **Persistencia** - La información se mantiene entre sesiones
+- **Sincronización** - Las estadísticas se actualizan automáticamente
+- **Respaldo** - Sistema de datos de ejemplo para inicialización
 
 ## 🤝 Contribución
 

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuario - CENS 456 Ezeiza</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #f59e0b;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+            --dark-color: #1f2937;
+            --gray-color: #6b7280;
+            --light-gray: #f3f4f6;
+            --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .register-container {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+        }
+
+        .register-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .register-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" patternUnits="userSpaceOnUse" width="100" height="100"><circle cx="50" cy="50" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        }
+
+        .register-header .logo {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .register-header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .register-header p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .register-form {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark-color);
+            font-size: 0.9rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--white);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-color);
+            font-size: 1.1rem;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--gray-color);
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: var(--primary-color);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .register-button {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--white);
+            border: none;
+            padding: 0.875rem 1.5rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .register-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+        }
+
+        .register-button:active {
+            transform: translateY(0);
+        }
+
+        .register-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-message {
+            background: #fef2f2;
+            color: var(--error-color);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--error-color);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .success-message {
+            background: #f0fdf4;
+            color: var(--success-color);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--success-color);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .register-footer {
+            text-align: center;
+            padding: 1.5rem 2rem;
+            background: var(--light-gray);
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .register-footer p {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .login-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .login-link:hover {
+            color: var(--primary-dark);
+        }
+
+        .strength-meter {
+            margin-top: 0.5rem;
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            height: 100%;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .strength-text {
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            color: var(--gray-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .register-container {
+                margin: 1rem;
+                border-radius: 16px;
+            }
+
+            .register-header {
+                padding: 1.5rem;
+            }
+
+            .register-header h1 {
+                font-size: 1.25rem;
+            }
+
+            .register-form {
+                padding: 1.5rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .register-footer {
+                padding: 1rem 1.5rem;
+            }
+        }
+
+        .register-container {
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-header">
+            <div class="logo">
+                <i class="fas fa-user-plus"></i>
+            </div>
+            <h1>Registro de Usuario</h1>
+            <p>CENS 456 Ezeiza - Sistema de Gestión</p>
+        </div>
+
+        <form class="register-form" id="registerForm">
+            <div class="error-message" id="errorMessage">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="errorText"></span>
+            </div>
+
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i>
+                <span id="successText"></span>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName">Nombre *</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" id="firstName" name="firstName" placeholder="Tu nombre" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName">Apellido *</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" id="lastName" name="lastName" placeholder="Tu apellido" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email *</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" id="email" name="email" placeholder="tu.email@ejemplo.com" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="username">Usuario *</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-at input-icon"></i>
+                    <input type="text" id="username" name="username" placeholder="Nombre de usuario" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Teléfono</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-phone input-icon"></i>
+                    <input type="tel" id="phone" name="phone" placeholder="(011) 1234-5678">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="role">Rol *</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-user-tag input-icon"></i>
+                    <select id="role" name="role" required>
+                        <option value="">Selecciona un rol</option>
+                        <option value="profesor">Profesor</option>
+                        <option value="preceptor">Preceptor</option>
+                        <option value="dicyt">DICYT</option>
+                        <option value="administrador">Administrador</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Contraseña *</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="password" name="password" placeholder="Crea una contraseña segura" required>
+                    <button type="button" class="password-toggle" id="passwordToggle">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <div class="strength-meter">
+                    <div class="strength-fill" id="strengthFill"></div>
+                </div>
+                <div class="strength-text" id="strengthText">Fuerza de contraseña</div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirmar Contraseña *</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Repite tu contraseña" required>
+                    <button type="button" class="password-toggle" id="confirmPasswordToggle">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="register-button" id="registerButton">
+                <i class="fas fa-user-plus"></i>
+                Registrar Usuario
+            </button>
+        </form>
+
+        <div class="register-footer">
+            <p>¿Ya tienes una cuenta?</p>
+            <a href="login.html" class="login-link">
+                <i class="fas fa-sign-in-alt"></i>
+                Iniciar Sesión
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Referencias DOM
+        const registerForm = document.getElementById('registerForm');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const passwordToggle = document.getElementById('passwordToggle');
+        const confirmPasswordToggle = document.getElementById('confirmPasswordToggle');
+        const strengthFill = document.getElementById('strengthFill');
+        const strengthText = document.getElementById('strengthText');
+        const errorMessage = document.getElementById('errorMessage');
+        const errorText = document.getElementById('errorText');
+        const successMessage = document.getElementById('successMessage');
+        const successText = document.getElementById('successText');
+
+        // Función para mostrar error
+        function showError(message) {
+            errorText.textContent = message;
+            errorMessage.style.display = 'block';
+            successMessage.style.display = 'none';
+            
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        // Función para mostrar éxito
+        function showSuccess(message) {
+            successText.textContent = message;
+            successMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
+            
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        // Toggle contraseña
+        function setupPasswordToggle(input, button) {
+            button.addEventListener('click', function() {
+                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                input.setAttribute('type', type);
+                
+                const icon = this.querySelector('i');
+                if (type === 'password') {
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                } else {
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                }
+            });
+        }
+
+        setupPasswordToggle(passwordInput, passwordToggle);
+        setupPasswordToggle(confirmPasswordInput, confirmPasswordToggle);
+
+        // Verificador de fuerza de contraseña
+        function checkPasswordStrength(password) {
+            let score = 0;
+            let feedback = 'Muy débil';
+            let color = '#ef4444';
+
+            if (password.length >= 8) score += 1;
+            if (password.match(/[a-z]+/)) score += 1;
+            if (password.match(/[A-Z]+/)) score += 1;
+            if (password.match(/[0-9]+/)) score += 1;
+            if (password.match(/[^a-zA-Z0-9]+/)) score += 1;
+
+            switch (score) {
+                case 0:
+                case 1:
+                    feedback = 'Muy débil';
+                    color = '#ef4444';
+                    break;
+                case 2:
+                    feedback = 'Débil';
+                    color = '#f59e0b';
+                    break;
+                case 3:
+                    feedback = 'Regular';
+                    color = '#eab308';
+                    break;
+                case 4:
+                    feedback = 'Fuerte';
+                    color = '#10b981';
+                    break;
+                case 5:
+                    feedback = 'Muy fuerte';
+                    color = '#059669';
+                    break;
+            }
+
+            const percentage = (score / 5) * 100;
+            
+            strengthFill.style.width = percentage + '%';
+            strengthFill.style.background = color;
+            strengthText.textContent = feedback;
+            strengthText.style.color = color;
+
+            return score;
+        }
+
+        passwordInput.addEventListener('input', function() {
+            checkPasswordStrength(this.value);
+        });
+
+        // Validación de email
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Validación de usuario existente
+        function isUsernameAvailable(username) {
+            const existingUsers = JSON.parse(localStorage.getItem('cens456_users') || '{}');
+            return !existingUsers.hasOwnProperty(username);
+        }
+
+        // Manejo del formulario
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const userData = {
+                firstName: formData.get('firstName').trim(),
+                lastName: formData.get('lastName').trim(),
+                email: formData.get('email').trim(),
+                username: formData.get('username').trim(),
+                phone: formData.get('phone').trim(),
+                role: formData.get('role'),
+                password: formData.get('password'),
+                confirmPassword: formData.get('confirmPassword')
+            };
+
+            // Validaciones
+            if (!userData.firstName || !userData.lastName || !userData.email || !userData.username || !userData.role || !userData.password || !userData.confirmPassword) {
+                showError('Por favor, completa todos los campos obligatorios.');
+                return;
+            }
+
+            if (!isValidEmail(userData.email)) {
+                showError('Por favor, ingresa un email válido.');
+                return;
+            }
+
+            if (userData.username.length < 3) {
+                showError('El nombre de usuario debe tener al menos 3 caracteres.');
+                return;
+            }
+
+            if (!isUsernameAvailable(userData.username)) {
+                showError('El nombre de usuario ya está en uso. Elige otro.');
+                return;
+            }
+
+            if (userData.password.length < 6) {
+                showError('La contraseña debe tener al menos 6 caracteres.');
+                return;
+            }
+
+            if (userData.password !== userData.confirmPassword) {
+                showError('Las contraseñas no coinciden.');
+                return;
+            }
+
+            const passwordStrength = checkPasswordStrength(userData.password);
+            if (passwordStrength < 3) {
+                showError('La contraseña es muy débil. Usa mayúsculas, minúsculas, números y símbolos.');
+                return;
+            }
+
+            // Guardar usuario
+            const existingUsers = JSON.parse(localStorage.getItem('cens456_users') || '{}');
+            
+            existingUsers[userData.username] = {
+                password: userData.password,
+                nombre: `${userData.firstName} ${userData.lastName}`,
+                firstName: userData.firstName,
+                lastName: userData.lastName,
+                email: userData.email,
+                phone: userData.phone,
+                role: userData.role,
+                createdAt: new Date().toISOString(),
+                active: true
+            };
+
+            localStorage.setItem('cens456_users', JSON.stringify(existingUsers));
+
+            showSuccess('¡Usuario registrado exitosamente! Redirigiendo al login...');
+            
+            // Limpiar formulario
+            this.reset();
+            strengthFill.style.width = '0%';
+            strengthText.textContent = 'Fuerza de contraseña';
+            strengthText.style.color = '#6b7280';
+
+            // Redirigir al login después de 2 segundos
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2000);
+        });
+
+        // Verificación en tiempo real de disponibilidad de usuario
+        let usernameTimeout;
+        document.getElementById('username').addEventListener('input', function() {
+            clearTimeout(usernameTimeout);
+            const username = this.value.trim();
+            
+            if (username.length >= 3) {
+                usernameTimeout = setTimeout(() => {
+                    if (!isUsernameAvailable(username)) {
+                        this.style.borderColor = '#ef4444';
+                        showError('El nombre de usuario ya está en uso.');
+                    } else {
+                        this.style.borderColor = '#10b981';
+                    }
+                }, 500);
+            }
+        });
+
+        console.log('👤 Sistema de Registro CENS 456 cargado');
+        console.log('📝 Formulario de registro funcional');
+        console.log('🔐 Validación de contraseñas implementada');
+    </script>
+</body>
+</html>
