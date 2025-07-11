@@ -376,6 +376,11 @@
 
         <div class="login-footer">
             <p>Sistema de Gestión Institucional</p>
+            <div style="margin: 1rem 0;">
+                <a href="register.html" style="color: #2563eb; text-decoration: none; font-weight: 600;">
+                    <i class="fas fa-user-plus"></i> ¿Nuevo usuario? Regístrate aquí
+                </a>
+            </div>
             <div class="version-info">
                 Versión 2.0 | © 2024 CENS 456 Ezeiza
             </div>
@@ -383,13 +388,20 @@
     </div>
 
     <script>
-        // Datos de usuarios (en producción esto debería estar en un backend seguro)
-        const usuarios = {
-            'admin': { password: 'admin123', nombre: 'Administrador', role: 'administrador' },
-            'preceptor': { password: 'preceptor123', nombre: 'Preceptor', role: 'preceptor' },
-            'dicyt': { password: 'dicyt123', nombre: 'DICYT', role: 'dicyt' },
-            'profesor': { password: 'profesor123', nombre: 'Profesor', role: 'profesor' }
-        };
+        // Función para obtener usuarios (incluye predeterminados + registrados)
+        function getUsuarios() {
+            const usuariosPredeterminados = {
+                'admin': { password: 'admin123', nombre: 'Administrador', role: 'administrador' },
+                'preceptor': { password: 'preceptor123', nombre: 'Preceptor', role: 'preceptor' },
+                'dicyt': { password: 'dicyt123', nombre: 'DICYT', role: 'dicyt' },
+                'profesor': { password: 'profesor123', nombre: 'Profesor', role: 'profesor' }
+            };
+            
+            const usuariosRegistrados = JSON.parse(localStorage.getItem('cens456_users') || '{}');
+            
+            // Combinar usuarios predeterminados con registrados
+            return { ...usuariosPredeterminados, ...usuariosRegistrados };
+        }
 
         // Referencias DOM
         const loginForm = document.getElementById('loginForm');
@@ -486,13 +498,24 @@
             
             // Simular delay de autenticación
             setTimeout(() => {
+                // Obtener lista actualizada de usuarios
+                const usuarios = getUsuarios();
+                
                 // Verificar credenciales
                 if (usuarios[username] && usuarios[username].password === password) {
+                    // Verificar si el usuario está activo (solo para usuarios registrados)
+                    if (usuarios[username].active === false) {
+                        setLoading(false);
+                        showError('Usuario desactivado. Contacta al administrador.');
+                        return;
+                    }
+                    
                     // Login exitoso
                     const userData = {
                         username: username,
                         nombre: usuarios[username].nombre,
                         role: usuarios[username].role,
+                        email: usuarios[username].email || '',
                         loginTime: new Date().toISOString()
                     };
                     
