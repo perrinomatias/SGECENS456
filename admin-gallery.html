@@ -237,6 +237,19 @@
 
         <div class="upload-section">
             <h2><i class="fas fa-cloud-upload-alt"></i> Subir Nueva Imagen</h2>
+            
+            <!-- Botón de prueba -->
+            <div style="margin-bottom: 1rem; padding: 1rem; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 0.5rem;">
+                <h4>🧪 Pruebas de Diagnóstico:</h4>
+                <button onclick="testFileInput()" class="btn btn-secondary" style="margin-right: 0.5rem;">
+                    Probar File Input
+                </button>
+                <button onclick="testElements()" class="btn btn-secondary">
+                    Verificar Elementos
+                </button>
+                <div id="testResults" style="margin-top: 0.5rem; font-family: monospace; font-size: 0.9rem;"></div>
+            </div>
+            
             <div class="file-upload-area" id="uploadArea">
                 <div class="upload-icon">
                     <i class="fas fa-cloud-upload-alt"></i>
@@ -547,6 +560,78 @@
             document.addEventListener('DOMContentLoaded', initGallery);
         } else {
             initGallery();
+        }
+
+        // Funciones de prueba
+        function testFileInput() {
+            console.log('🧪 Probando file input...');
+            const fileInput = document.getElementById('fileInput');
+            const testResults = document.getElementById('testResults');
+            
+            if (fileInput) {
+                testResults.innerHTML = '✅ File Input encontrado. Intentando click...<br>';
+                try {
+                    fileInput.click();
+                    testResults.innerHTML += '✅ Click ejecutado correctamente.';
+                    console.log('✅ File input click exitoso');
+                } catch (error) {
+                    testResults.innerHTML += '❌ Error al hacer click: ' + error.message;
+                    console.error('❌ Error en file input click:', error);
+                }
+            } else {
+                testResults.innerHTML = '❌ File Input NO encontrado.';
+                console.error('❌ File input no existe');
+            }
+        }
+
+        function testElements() {
+            console.log('🧪 Verificando todos los elementos...');
+            const elements = {
+                'File Input': document.getElementById('fileInput'),
+                'Upload Area': document.getElementById('uploadArea'),
+                'Upload Form': document.getElementById('uploadForm'),
+                'Upload Button': document.getElementById('uploadBtn'),
+                'Cancel Button': document.getElementById('cancelBtn'),
+                'Image Preview': document.getElementById('imagePreview'),
+                'Preview Image': document.getElementById('previewImg'),
+                'Image Title': document.getElementById('imageTitle'),
+                'Image Description': document.getElementById('imageDescription')
+            };
+
+            const testResults = document.getElementById('testResults');
+            testResults.innerHTML = '<h5>Verificación de Elementos:</h5>';
+
+            for (const [name, element] of Object.entries(elements)) {
+                if (element) {
+                    testResults.innerHTML += `✅ ${name}: Existe<br>`;
+                    console.log(`✅ ${name}: encontrado`);
+                } else {
+                    testResults.innerHTML += `❌ ${name}: NO Existe<br>`;
+                    console.error(`❌ ${name}: no encontrado`);
+                }
+            }
+
+            // Test adicional de event listeners
+            const uploadArea = document.getElementById('uploadArea');
+            if (uploadArea && uploadArea.onclick) {
+                testResults.innerHTML += '✅ Upload Area tiene event listener<br>';
+                console.log('✅ Upload area event listener activo');
+            } else {
+                testResults.innerHTML += '❌ Upload Area NO tiene event listener<br>';
+                console.error('❌ Upload area sin event listener');
+            }
+        }
+
+        // Función para test manual directo
+        function testManualUpload() {
+            console.log('🧪 Test manual de upload...');
+            const fileInput = document.getElementById('fileInput');
+            if (fileInput) {
+                // Simular cambio de archivo para probar el handler
+                console.log('Simulando selección de archivo...');
+                const event = new Event('change', { bubbles: true });
+                fileInput.dispatchEvent(event);
+            }
         }
     </script>
 </body>
