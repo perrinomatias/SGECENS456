@@ -5,11 +5,11 @@ Sistema de Gestión Institucional del CENS 456 Ezeiza
 
 Este repositorio contiene el sistema web completo del CENS 456 Ezeiza, que incluye:
 
-1. **Sitio Web Institucional** - Landing page informativa del centro educativo
-2. **Sistema de Login** - Portal de autenticación para personal autorizado
-3. **Sistema de Registro** - Registro completo de nuevos usuarios
-4. **Dashboard de Gestión** - Panel de control completamente funcional con gestión de datos
-5. **Google Apps Script** - Integración con herramientas externas
+1.  **Sitio Web Institucional** - Landing page informativa del centro educativo
+2.  **Sistema de Login** - Portal de autenticación para personal autorizado
+3.  **Sistema de Registro** - Registro completo de nuevos usuarios
+4.  **Dashboard de Gestión** - Panel de control con acceso a sistemas externos
+5.  **Google Apps Script** - Integración con herramientas de gestión principal
 
 ## 🚀 Características Principales
 
@@ -38,14 +38,12 @@ Este repositorio contiene el sistema web completo del CENS 456 Ezeiza, que inclu
 - Integración automática con login
 
 ### Dashboard de Gestión (`dashboard.html`)
-- **🆕 COMPLETAMENTE FUNCIONAL** - Panel de control completo
-- **Gestión de Estudiantes** - CRUD completo con búsqueda y filtros
-- **Gestión de Docentes** - Administración de profesores
-- **Sistema de Reportes** - Gráficos dinámicos con Canvas
-- **Configuración de Perfil** - Edición de datos y cambio de contraseña
-- Acceso directo a 3 Google Apps Script
-- Navegación intuitiva y responsive
-- Datos persistentes en localStorage
+- **Panel de control centralizado** con enlaces directos a Google Apps Script para gestión.
+- **Acceso directo a 3 Google Apps Script**: Sistema Principal, Carga de Notas y Sistema de Alertas.
+- **Reportes** - Gráficos dinámicos con Canvas (datos simulados en el dashboard, pero orientados a reportes de GAS).
+- **Configuración de Perfil** - Edición de datos y cambio de contraseña.
+- Navegación intuitiva y responsive.
+- Datos de usuario persistentes en localStorage.
 
 ## 🔐 Sistema de Autenticación
 
@@ -58,12 +56,12 @@ Este repositorio contiene el sistema web completo del CENS 456 Ezeiza, que inclu
 
 ### Usuarios Predefinidos
 
-| Usuario     | Contraseña     | Rol           | Permisos de Acceso                     |
-|-------------|----------------|---------------|----------------------------------------|
-| `admin`     | `admin123`     | Administrador | ✅ Gestión + ✅ Notas + ✅ Alertas     |
-| `preceptor` | `preceptor123` | Preceptor     | ✅ Gestión + ❌ Notas + ✅ Alertas     |
-| `dicyt`     | `dicyt123`     | DICYT         | ✅ Gestión + ❌ Notas + ✅ Alertas     |
-| `profesor`  | `profesor123`  | Profesor      | ❌ Gestión + ✅ Notas + ❌ Alertas     |
+| Usuario     | Contraseña     | Rol           | Permisos de Acceso                         |
+|-------------|----------------|---------------|--------------------------------------------|
+| `admin`     | `admin123`     | Administrador | ✅ Apps Script + ✅ Reportes + ✅ Config. |
+| `preceptor` | `preceptor123` | Preceptor     | ✅ Apps Script (Principal, Alertas) + ✅ Reportes + ✅ Config. |
+| `dicyt`     | `dicyt123`     | DICYT         | ✅ Apps Script (Principal, Alertas) + ✅ Reportes + ✅ Config. |
+| `profesor`  | `profesor123`  | Profesor      | ✅ Apps Script (Carga de Notas) + ✅ Config. |
 
 *Nota: Además de estos usuarios predefinidos, cualquier persona puede registrarse usando el formulario de registro.*
 
@@ -78,227 +76,61 @@ Este repositorio contiene el sistema web completo del CENS 456 Ezeiza, que inclu
 ### Control de Acceso por Roles
 
 #### 🔧 **Administrador**
-- **Acceso:** Completo a todos los sistemas
-- **Funciones:** Gestión institucional, carga de notas, alertas
-- **Uso:** Supervisión general del sistema
+- **Acceso:** Completo a todas las funcionalidades del Dashboard y acceso a todos los Google Apps Script.
+- **Funciones:** Supervisión general del sistema, acceso a carga de notas, alertas, reportes y configuración.
 
 #### 👮 **Preceptor**
-- **Acceso:** Sistema principal + Alertas
-- **Funciones:** Gestión de estudiantes, control de alertas
-- **Uso:** Seguimiento académico y disciplinario
+- **Acceso:** Dashboard (excluyendo Carga de Notas) y acceso a los Google Apps Script de Sistema Principal y Alertas.
+- **Funciones:** Acceso a gestión (vía GAS) y control de alertas.
 
 #### 🏛️ **DICYT**
-- **Acceso:** Sistema principal + Alertas  
-- **Funciones:** Control institucional, gestión de alertas
-- **Uso:** Supervisión técnica y administrativa
+- **Acceso:** Dashboard (excluyendo Carga de Notas) y acceso a los Google Apps Script de Sistema Principal y Alertas.
+- **Funciones:** Acceso a gestión (vía GAS) y control de alertas.
 
 #### 👨‍🏫 **Profesor**
-- **Acceso:** Solo carga de notas
-- **Funciones:** Registro de calificaciones
-- **Uso:** Evaluación de estudiantes
+- **Acceso:** Dashboard (solo Dashboard y Configuración) y acceso exclusivo al Google Apps Script de Carga de Notas.
+- **Funciones:** Registro de calificaciones y gestión de perfil personal.
 
-## � Dashboard Completamente Funcional
+## 📊 Estadísticas y Reportes (en Dashboard)
 
-### 🎯 Funcionalidades Implementadas
+### 📈 Datos mostrados en Dashboard
+- 👥 **Estudiantes** - Cantidad indicada como "N/A (vía GAS)" ya que la gestión se realiza en Google Apps Script.
+- 👨‍🏫 **Docentes** - Cantidad indicada como "N/A (vía GAS)" ya que la gestión se realiza en Google Apps Script.
+- 📚 **12 Cursos** - Estructura de 3 años en 4 modalidades (valor fijo en dashboard).
+- **Reportes** - Se visualizan gráficos simulados en el dashboard, pero la fuente de datos real sería provista por Google Apps Script.
 
-#### 👥 **Gestión de Estudiantes**
-- ✅ **CRUD Completo** - Crear, leer, actualizar y eliminar estudiantes
-- ✅ **Búsqueda en tiempo real** - Filtro por nombre instantáneo
-- ✅ **Filtros avanzados** - Por modalidad (presencial, semipresencial, acelerado) y curso
-- ✅ **Tarjetas informativas** - Visualización clara de datos del estudiante
-- ✅ **Datos persistentes** - Almacenamiento local automático
+### 💾 **Almacenamiento Local (para credenciales y perfil)**
+- **localStorage** - Los datos de usuario y sesión se guardan localmente.
+- **Persistencia** - La información se mantiene entre sesiones.
+- **Respaldo** - Sistema de datos de ejemplo para inicialización de usuarios predefinidos.
 
-#### 👨‍🏫 **Gestión de Docentes**
-- ✅ **CRUD Completo** - Administración completa de profesores
-- ✅ **Especialidades** - Registro de materias y especialidades
-- ✅ **Modalidades** - Asignación a diferentes modalidades de enseñanza
-- ✅ **Datos de contacto** - Email y teléfono para comunicación
+## 🔗 Google Apps Script Integrados
 
-#### 📈 **Sistema de Reportes**
-- ✅ **Gráficos dinámicos** - Visualización usando Canvas nativo
-- ✅ **Rendimiento académico** - Estadísticas por año y modalidad
-- ✅ **Distribución por modalidad** - Gráfico de torta con porcentajes
-- ✅ **Actualización automática** - Los gráficos se regeneran con nuevos datos
+El sistema permite acceso directo a tres aplicaciones de Google Apps Script, que son los encargados de la gestión real de datos:
 
-#### ⚙️ **Configuración de Perfil**
-- ✅ **Edición de datos** - Actualización de nombre y email
-- ✅ **Cambio de contraseña** - Sistema seguro con validación
-- ✅ **Validación robusta** - Verificación de contraseña actual
-- ✅ **Persistencia** - Los cambios se guardan automáticamente
+1.  **Sistema Principal**
+    - URL: `https://script.google.com/.../exec`
+    - Funcionalidad: Gestión principal de estudiantes y docentes.
 
-### 💾 **Sistema de Datos**
-- **localStorage** - Almacenamiento local para máxima compatibilidad
-- **Datos de ejemplo** - Se cargan automáticamente si no existen datos
-- **Sincronización** - Las estadísticas se actualizan en tiempo real
-- **Respaldo automático** - Los datos persisten entre sesiones
+2.  **Carga de Notas**
+    - URL: `https://script.google.com/.../exec?page=carga`
+    - Funcionalidad: Sistema de registro de calificaciones.
 
-## �🔗 Google Apps Script Integrados
+3.  **Sistema de Alertas**
+    - URL: `https://script.google.com/.../exec?page=alertas`
+    - Funcionalidad: Gestión de notificaciones institucionales.
 
-El sistema permite acceso directo a tres aplicaciones de Google Apps Script:
-
-1. **Sistema Principal**
-   - URL: `https://script.google.com/.../exec`
-   - Funcionalidad: Gestión principal del centro
-
-2. **Carga de Notas**
-   - URL: `https://script.google.com/.../exec?page=carga`
-   - Funcionalidad: Sistema de registro de calificaciones
-
-3. **Sistema de Alertas**
-   - URL: `https://script.google.com/.../exec?page=alertas`
-   - Funcionalidad: Gestión de notificaciones
-
-## � Integración WhatsApp
+## 📱 Integración WhatsApp
 
 El sistema incluye integración completa con WhatsApp para facilitar el contacto:
 
-- **📍 Sección de Contacto**: Botón dedicado en información de contacto
-- **📝 Alternativa al Formulario**: Opción rápida después del formulario de contacto  
-- **🔗 Redes Sociales**: Enlace directo en el footer
-- **📱 Mobile Optimized**: Diseñado especialmente para dispositivos móviles
-- **🎨 Animaciones**: Efectos visuales atractivos con bounce animation
+-   **📍 Sección de Contacto**: Botón dedicado en información de contacto
+-   **📝 Alternativa al Formulario**: Opción rápida después del formulario de contacto
+-   **🔗 Redes Sociales**: Enlace directo en el footer
+-   **📱 Mobile Optimized**: Diseñado especialmente para dispositivos móviles
+-   **🎨 Animaciones**: Efectos visuales atractivos con bounce animation
 
-**Enlace WhatsApp**: `https://wa.me/ais/1151919419567870?s=5`  
+**Enlace WhatsApp**: `https://wa.me/ais/1151919419567870?s=5`
 **Mensaje**: "Chatea con CENS 456 - Termina tu secundaria"
 
-## �📁 Estructura del Proyecto
-
-```
-SGECENS456/
-├── index.html          # Sitio web institucional
-├── login.html          # Sistema de autenticación
-├── register.html       # 🆕 Sistema de registro de usuarios
-├── dashboard.html      # Panel de gestión completo
-├── test.html          # Página de testing y documentación
-├── styles.css          # Estilos del sitio principal
-├── script.js           # JavaScript del sitio principal
-└── README.md          # Documentación
-```
-
-## 🛠️ Instalación y Uso
-
-### 1. Clonar el repositorio
-```bash
-git clone https://github.com/usuario/SGECENS456.git
-cd SGECENS456
-```
-
-### 2. Servir los archivos
-```bash
-# Usando Python 3
-python -m http.server 8000
-
-# Usando Node.js (http-server)
-npx http-server -p 8000
-
-# Usando PHP
-php -S localhost:8000
-```
-
-### 3. Acceder al sistema
-- **Sitio principal**: `http://localhost:8000/index.html`
-- **Sistema de login**: `http://localhost:8000/login.html`
-- **Dashboard**: `http://localhost:8000/dashboard.html` (requiere login)
-
-## 🎨 Características Técnicas
-
-### Tecnologías Utilizadas
-- **HTML5** - Estructura semántica
-- **CSS3** - Diseño responsive con Flexbox/Grid
-- **JavaScript ES6+** - Interactividad y lógica
-- **Font Awesome** - Iconografía
-- **Google Fonts** - Tipografía (Inter)
-
-### Compatibilidad
-- ✅ Chrome 80+
-- ✅ Firefox 75+
-- ✅ Safari 13+
-- ✅ Edge 80+
-- ✅ Dispositivos móviles
-
-### Responsive Design
-- 📱 Mobile First
-- 💻 Desktop optimizado
-- 📱 Tablet friendly
-- 🔄 Orientación adaptable
-
-## 🔒 Seguridad
-
-### Consideraciones de Producción
-1. **Cambiar contraseñas predeterminadas**
-2. **Implementar backend real para autenticación**
-3. **Usar HTTPS en producción**
-4. **Configurar headers de seguridad**
-5. **Implementar rate limiting**
-
-### Variables de Entorno Recomendadas
-```env
-APP_SECRET_KEY=tu_clave_secreta_aqui
-SESSION_TIMEOUT=1800
-MAX_LOGIN_ATTEMPTS=3
-```
-
-## 📱 Funcionalidades Móviles
-
-- ✅ Diseño responsive
-- ✅ Touch-friendly
-- ✅ Navegación optimizada
-- ✅ Formularios adaptados
-- ✅ Carga rápida
-
-## 🚀 Deploy
-
-### GitHub Pages
-1. Subir archivos al repositorio
-2. Activar GitHub Pages en configuración
-3. Seleccionar rama principal
-
-### Netlify
-```bash
-# Deploy directo
-netlify deploy --dir=. --prod
-```
-
-### Vercel
-```bash
-# Deploy con Vercel CLI
-vercel --prod
-```
-
-## 📊 Estadísticas del Sistema
-
-### 📈 Datos Dinámicos
-- 👥 **Estudiantes** - Cantidad actualizada en tiempo real según registros
-- 👨‍🏫 **Docentes** - Número dinámico basado en profesores registrados  
-- 📚 **12 Cursos** - Estructura de 3 años en 4 modalidades
-- 🎓 **500+ Egresados** - Histórico de graduados exitosos
-
-### 💾 Almacenamiento
-- **localStorage** - Todos los datos se guardan localmente
-- **Persistencia** - La información se mantiene entre sesiones
-- **Sincronización** - Las estadísticas se actualizan automáticamente
-- **Respaldo** - Sistema de datos de ejemplo para inicialización
-
-## 🤝 Contribución
-
-1. Fork el proyecto
-2. Crear rama feature (`git checkout -b feature/nueva-funcionalidad`)
-3. Commit cambios (`git commit -am 'Agregar nueva funcionalidad'`)
-4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
-5. Crear Pull Request
-
-## 📞 Contacto
-
-**CENS 456 Ezeiza**
-- 📍 Dirección: Av. Principal 1234, Ezeiza, Buenos Aires
-- 📞 Teléfono: (011) 4480-XXXX
-- 📧 Email: info@cens456ezeiza.edu.ar
-- 🌐 Web: [www.cens456ezeiza.edu.ar](http://www.cens456ezeiza.edu.ar)
-
-## 📄 Licencia
-
-Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
-
----
-
-**© 2024 CENS 456 Ezeiza - Sistema de Gestión Institucional**
+## 📁 Estructura del Proyecto

@@ -970,7 +970,6 @@
     </div>
 
     <div class="dashboard-container">
-        <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="logo">
@@ -1016,38 +1015,24 @@
                 </div>
 
                 <div class="nav-section">
-                    <div class="nav-section-title">Gestión</div>
-                    <div class="nav-item">
-                        <a href="#" class="nav-link" data-section="estudiantes">
-                            <i class="fas fa-users"></i>
-                            Estudiantes
-                        </a>
-                    </div>
-                    <div class="nav-item">
-                        <a href="#" class="nav-link" data-section="docentes">
-                            <i class="fas fa-chalkboard-teacher"></i>
-                            Docentes
-                        </a>
-                    </div>
-                    <div class="nav-item" id="navGaleria">
-                        <a href="admin-gallery.html" class="nav-link" target="_blank">
-                            <i class="fas fa-images"></i>
-                            Galería
-                        </a>
-                    </div>
+                    <div class="nav-section-title">Reportes y Configuración</div>
                     <div class="nav-item">
                         <a href="#" class="nav-link" data-section="reportes">
                             <i class="fas fa-chart-bar"></i>
                             Reportes
                         </a>
                     </div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link" data-section="configuracion">
+                            <i class="fas fa-cog"></i>
+                            Configuración
+                        </a>
+                    </div>
                 </div>
             </nav>
         </aside>
 
-        <!-- Main Content -->
         <main class="main-content" id="mainContent">
-            <!-- Header -->
             <header class="header">
                 <div class="header-left">
                     <button class="sidebar-toggle" id="sidebarToggle">
@@ -1090,33 +1075,29 @@
                 </div>
             </header>
 
-            <!-- Content -->
             <div class="content" id="mainContent">
-                <!-- Dashboard Home -->
                 <div id="dashboardHome" class="content-section">
-                    <!-- Welcome Section -->
                     <section class="welcome-section">
                         <div class="welcome-content">
                             <h1 id="welcomeTitle">¡Bienvenido al Sistema!</h1>
-                            <p id="welcomeMessage">Accede a todas las herramientas de gestión del CENS 456 Ezeiza desde este panel de control.</p>
+                            <p id="welcomeMessage">Accede a todas las herramientas del CENS 456 Ezeiza desde este panel de control.</p>
                             <div class="welcome-stats">
                                 <div class="stat-item">
-                                    <span class="stat-number" id="totalEstudiantes">0</span>
-                                    <span class="stat-label">Estudiantes</span>
+                                    <span class="stat-number" id="totalEstudiantes">N/A</span>
+                                    <span class="stat-label">Estudiantes (vía GAS)</span>
                                 </div>
                                 <div class="stat-item">
-                                    <span class="stat-number" id="totalDocentes">0</span>
-                                    <span class="stat-label">Docentes</span>
+                                    <span class="stat-number" id="totalDocentes">N/A</span>
+                                    <span class="stat-label">Docentes (vía GAS)</span>
                                 </div>
                                 <div class="stat-item">
-                                    <span class="stat-number" id="totalCursos">0</span>
+                                    <span class="stat-number" id="totalCursos">12</span>
                                     <span class="stat-label">Cursos</span>
                                 </div>
                             </div>
                         </div>
                     </section>
 
-                    <!-- Quick Actions -->
                     <section class="quick-actions">
                         <h2 class="section-title">
                             <i class="fas fa-bolt"></i>
@@ -1124,7 +1105,6 @@
                         </h2>
                         
                         <div class="actions-grid">
-                            <!-- Sistema Principal -->
                             <div class="action-card primary" data-app="principal" id="sistemaPrincipalCard">
                                 <div class="action-header">
                                     <div class="action-icon primary">
@@ -1132,7 +1112,7 @@
                                     </div>
                                     <div class="action-info">
                                         <h3>Sistema Principal</h3>
-                                        <p>Acceso al sistema principal de gestión institucional</p>
+                                        <p>Acceso al sistema principal de gestión institucional (Google Apps Script)</p>
                                     </div>
                                 </div>
                                 <div class="action-footer">
@@ -1147,7 +1127,6 @@
                                 </div>
                             </div>
 
-                            <!-- Carga de Notas -->
                             <div class="action-card success" data-app="carga" id="cargaNotasCard">
                                 <div class="action-header">
                                     <div class="action-icon success">
@@ -1155,7 +1134,7 @@
                                     </div>
                                     <div class="action-info">
                                         <h3>Carga de Notas</h3>
-                                        <p>Sistema para registrar y gestionar calificaciones de estudiantes</p>
+                                        <p>Sistema para registrar y gestionar calificaciones de estudiantes (Google Apps Script)</p>
                                     </div>
                                 </div>
                                 <div class="action-footer">
@@ -1170,7 +1149,6 @@
                                 </div>
                             </div>
 
-                            <!-- Sistema de Alertas -->
                             <div class="action-card warning" data-app="alertas" id="alertasCard">
                                 <div class="action-header">
                                     <div class="action-icon warning">
@@ -1178,7 +1156,7 @@
                                     </div>
                                     <div class="action-info">
                                         <h3>Sistema de Alertas</h3>
-                                        <p>Gestión de notificaciones y alertas institucionales</p>
+                                        <p>Gestión de notificaciones y alertas institucionales (Google Apps Script)</p>
                                     </div>
                                 </div>
                                 <div class="action-footer">
@@ -1196,56 +1174,6 @@
                     </section>
                 </div>
 
-                <!-- Gestión de Estudiantes -->
-                <div id="estudiantesSection" class="content-section" style="display: none;">
-                    <div class="section-header">
-                        <h2><i class="fas fa-users"></i> Gestión de Estudiantes</h2>
-                        <button class="btn btn-primary" onclick="showAddStudentModal()">
-                            <i class="fas fa-plus"></i> Agregar Estudiante
-                        </button>
-                    </div>
-
-                    <div class="search-filters">
-                        <div class="search-bar">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="studentSearch" placeholder="Buscar estudiantes...">
-                        </div>
-                        <div class="filters">
-                            <select id="modalidadFilter">
-                                <option value="">Todas las modalidades</option>
-                                <option value="presencial">Presencial</option>
-                                <option value="semipresencial">Semipresencial</option>
-                                <option value="acelerado">Acelerado</option>
-                            </select>
-                            <select id="cursoFilter">
-                                <option value="">Todos los cursos</option>
-                                <option value="1">1° Año</option>
-                                <option value="2">2° Año</option>
-                                <option value="3">3° Año</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="students-grid" id="studentsGrid">
-                        <!-- Los estudiantes se cargarán dinámicamente -->
-                    </div>
-                </div>
-
-                <!-- Gestión de Docentes -->
-                <div id="docentesSection" class="content-section" style="display: none;">
-                    <div class="section-header">
-                        <h2><i class="fas fa-chalkboard-teacher"></i> Gestión de Docentes</h2>
-                        <button class="btn btn-primary" onclick="showAddTeacherModal()">
-                            <i class="fas fa-plus"></i> Agregar Docente
-                        </button>
-                    </div>
-
-                    <div class="teachers-grid" id="teachersGrid">
-                        <!-- Los docentes se cargarán dinámicamente -->
-                    </div>
-                </div>
-
-                <!-- Reportes -->
                 <div id="reportesSection" class="content-section" style="display: none;">
                     <div class="section-header">
                         <h2><i class="fas fa-chart-bar"></i> Reportes</h2>
@@ -1254,39 +1182,17 @@
                     <div class="reports-grid">
                         <div class="report-card">
                             <h3><i class="fas fa-graduation-cap"></i> Rendimiento Académico</h3>
+                            <p>Este reporte muestra datos de rendimiento académico obtenidos del Sistema Principal.</p>
                             <canvas id="graficoRendimiento" width="400" height="200"></canvas>
                         </div>
                         <div class="report-card">
                             <h3><i class="fas fa-chart-pie"></i> Distribución por Modalidad</h3>
+                            <p>Este reporte muestra la distribución de estudiantes por modalidad (datos simulados).</p>
                             <canvas id="graficoModalidades" width="400" height="200"></canvas>
-                        </div>
-
-                        <!-- Administración de Galería -->
-                        <div class="action-card primary" data-app="galeria" id="galeriaCard">
-                            <div class="action-header">
-                                <div class="action-icon primary">
-                                    <i class="fas fa-images"></i>
-                                </div>
-                                <div class="action-info">
-                                    <h3>Galería de Imágenes</h3>
-                                    <p>Administra las fotos que aparecen en la galería del sitio web</p>
-                                </div>
-                            </div>
-                            <div class="action-footer">
-                                <a href="admin-gallery.html" class="action-link" target="_blank">
-                                    Administrar Galería
-                                    <i class="fas fa-external-link-alt"></i>
-                                </a>
-                                <div class="action-status">
-                                    <span class="status-dot"></span>
-                                    Disponible
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Configuración -->
                 <div id="configuracionSection" class="content-section" style="display: none;">
                     <div class="section-header">
                         <h2><i class="fas fa-cog"></i> Configuración</h2>
@@ -1336,91 +1242,6 @@
         </main>
     </div>
 
-    <!-- Modal para Agregar Estudiante -->
-    <div id="addStudentModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-user-plus"></i> Agregar Estudiante</h3>
-                <button class="close" onclick="closeModal('addStudentModal')">&times;</button>
-            </div>
-            <form id="addStudentForm">
-                <div class="form-group">
-                    <label>Nombre completo *</label>
-                    <input type="text" id="studentName" required>
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="studentEmail">
-                </div>
-                <div class="form-group">
-                    <label>Teléfono</label>
-                    <input type="tel" id="studentPhone">
-                </div>
-                <div class="form-group">
-                    <label>Modalidad *</label>
-                    <select id="studentModalidad" required>
-                        <option value="">Seleccionar modalidad</option>
-                        <option value="presencial">Presencial</option>
-                        <option value="semipresencial">Semipresencial</option>
-                        <option value="acelerado">Acelerado</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Curso *</label>
-                    <select id="studentCurso" required>
-                        <option value="">Seleccionar curso</option>
-                        <option value="1">1° Año</option>
-                        <option value="2">2° Año</option>
-                        <option value="3">3° Año</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i> Guardar Estudiante
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal para Agregar Docente -->
-    <div id="addTeacherModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-chalkboard-teacher"></i> Agregar Docente</h3>
-                <button class="close" onclick="closeModal('addTeacherModal')">&times;</button>
-            </div>
-            <form id="addTeacherForm">
-                <div class="form-group">
-                    <label>Nombre completo *</label>
-                    <input type="text" id="teacherName" required>
-                </div>
-                <div class="form-group">
-                    <label>Email *</label>
-                    <input type="email" id="teacherEmail" required>
-                </div>
-                <div class="form-group">
-                    <label>Teléfono</label>
-                    <input type="tel" id="teacherPhone">
-                </div>
-                <div class="form-group">
-                    <label>Especialidad *</label>
-                    <input type="text" id="teacherSpecialty" required placeholder="Ej: Matemáticas, Lengua, Historia">
-                </div>
-                <div class="form-group">
-                    <label>Modalidad que enseña</label>
-                    <select id="teacherModalidad">
-                        <option value="">Todas las modalidades</option>
-                        <option value="presencial">Presencial</option>
-                        <option value="semipresencial">Semipresencial</option>
-                        <option value="acelerado">Acelerado</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i> Guardar Docente
-                </button>
-            </form>
-        </div>
-    </div>
-
     <script>
         // URLs de los Google Apps Script
         const appScriptUrls = {
@@ -1453,10 +1274,10 @@
 
         // Configuración de permisos por rol
         const rolePermissions = {
-            'administrador': ['principal', 'carga', 'alertas', 'galeria'], // Acceso completo
-            'preceptor': ['principal', 'alertas'], // Gestión y alertas
-            'dicyt': ['principal', 'alertas'], // Gestión y alertas  
-            'profesor': ['carga'] // Solo carga de notas
+            'administrador': ['principal', 'carga', 'alertas', 'reportes', 'configuracion'], // Acceso completo a apps y secciones internas
+            'preceptor': ['principal', 'alertas', 'reportes', 'configuracion'], // Gestión (vía GAS) y alertas
+            'dicyt': ['principal', 'alertas', 'reportes', 'configuracion'], // Gestión (vía GAS) y alertas  
+            'profesor': ['carga', 'configuracion'] // Solo carga de notas y configuración
         };
 
         // Inicializar dashboard con datos del usuario
@@ -1476,7 +1297,7 @@
             else greeting = 'Buenas noches';
             
             document.getElementById('welcomeMessage').textContent = 
-                `${greeting}. Accede a todas las herramientas de gestión del CENS 456 desde este panel.`;
+                `${greeting}. Accede a todas las herramientas del CENS 456 desde este panel.`;
             
             // Aplicar control de acceso basado en roles
             applyRoleBasedAccess(user.role);
@@ -1486,35 +1307,27 @@
         function applyRoleBasedAccess(userRole) {
             const userPermissions = rolePermissions[userRole] || [];
             
-            // Elementos del menú de navegación
-            const navElements = {
-                'principal': document.getElementById('navPrincipal'),
-                'carga': document.getElementById('navCarga'),
-                'alertas': document.getElementById('navAlertas'),
-                'galeria': document.getElementById('navGaleria') // Add galeria nav item
-            };
-            
-            // Elementos de las tarjetas
-            const cardElements = {
-                'principal': document.getElementById('sistemaPrincipalCard'),
-                'carga': document.getElementById('cargaNotasCard'),
-                'alertas': document.getElementById('alertasCard'),
-                'galeria': document.getElementById('galeriaCard') // Add galeria card
+            // Elementos del menú de navegación y tarjetas
+            const controllableElements = {
+                'principal': { nav: document.getElementById('navPrincipal'), card: document.getElementById('sistemaPrincipalCard') },
+                'carga': { nav: document.getElementById('navCarga'), card: document.getElementById('cargaNotasCard') },
+                'alertas': { nav: document.getElementById('navAlertas'), card: document.getElementById('alertasCard') },
+                'reportes': { nav: document.querySelector('.nav-link[data-section="reportes"]'), section: document.getElementById('reportesSection') },
+                'configuracion': { nav: document.querySelector('.nav-link[data-section="configuracion"]'), section: document.getElementById('configuracionSection') }
             };
             
             // Ocultar/mostrar elementos según permisos
-            Object.keys(navElements).forEach(permission => {
-                const navElement = navElements[permission];
-                const cardElement = cardElements[permission];
+            Object.keys(controllableElements).forEach(permission => {
+                const { nav, card, section } = controllableElements[permission];
                 
                 if (userPermissions.includes(permission)) {
-                    // Mostrar elemento
-                    if (navElement) navElement.style.display = 'block';
-                    if (cardElement) cardElement.style.display = 'block';
+                    if (nav) nav.style.display = 'block';
+                    if (card) card.style.display = 'block';
+                    if (section) section.style.display = 'block'; // Ensure sections are controlled too
                 } else {
-                    // Ocultar elemento
-                    if (navElement) navElement.style.display = 'none';
-                    if (cardElement) cardElement.style.display = 'none';
+                    if (nav) nav.style.display = 'none';
+                    if (card) card.style.display = 'none';
+                    if (section) section.style.display = 'none';
                 }
             });
             
@@ -1529,16 +1342,16 @@
             
             switch(userRole) {
                 case 'administrador':
-                    roleMessage = 'Tienes acceso completo a todos los sistemas de gestión.';
+                    roleMessage = 'Tienes acceso completo a todos los sistemas y reportes.';
                     break;
                 case 'preceptor':
-                    roleMessage = 'Accede al sistema de gestión y alertas institucionales.';
+                    roleMessage = 'Accede a los sistemas principales, alertas y reportes.';
                     break;
                 case 'dicyt':
-                    roleMessage = 'Accede al sistema de gestión y control de alertas.';
+                    roleMessage = 'Accede a los sistemas principales, control de alertas y reportes.';
                     break;
                 case 'profesor':
-                    roleMessage = 'Accede al sistema de carga de notas para tus estudiantes.';
+                    roleMessage = 'Accede al sistema de carga de notas para tus estudiantes y a tu configuración de perfil.';
                     break;
                 default:
                     roleMessage = 'Accede a las herramientas disponibles para tu rol.';
@@ -1574,90 +1387,13 @@
             userDropdown.classList.remove('show');
         });
 
-        // Sistema de datos local
-        const localData = {
-            estudiantes: JSON.parse(localStorage.getItem('cens456_estudiantes') || '[]'),
-            docentes: JSON.parse(localStorage.getItem('cens456_docentes') || '[]')
-        };
-
-        // Inicializar datos de ejemplo si no existen
-        function initializeSampleData() {
-            if (localData.estudiantes.length === 0) {
-                localData.estudiantes = [
-                    {
-                        id: 1,
-                        nombre: 'María González',
-                        email: 'maria.gonzalez@example.com',
-                        telefono: '11-2345-6789',
-                        modalidad: 'semipresencial',
-                        curso: '2',
-                        estado: 'activo',
-                        fechaIngreso: '2024-03-15'
-                    },
-                    {
-                        id: 2,
-                        nombre: 'Carlos Rodríguez',
-                        email: 'carlos.rodriguez@example.com',
-                        telefono: '11-3456-7890',
-                        modalidad: 'presencial',
-                        curso: '1',
-                        estado: 'activo',
-                        fechaIngreso: '2024-02-20'
-                    },
-                    {
-                        id: 3,
-                        nombre: 'Ana Martínez',
-                        email: 'ana.martinez@example.com',
-                        telefono: '11-4567-8901',
-                        modalidad: 'acelerado',
-                        curso: '3',
-                        estado: 'activo',
-                        fechaIngreso: '2024-01-10'
-                    }
-                ];
-                saveStudents();
-            }
-
-            if (localData.docentes.length === 0) {
-                localData.docentes = [
-                    {
-                        id: 1,
-                        nombre: 'Prof. Roberto Silva',
-                        email: 'roberto.silva@cens456.edu.ar',
-                        telefono: '11-5678-9012',
-                        especialidad: 'Matemáticas',
-                        modalidad: 'presencial',
-                        estado: 'activo'
-                    },
-                    {
-                        id: 2,
-                        nombre: 'Prof. Laura Fernández',
-                        email: 'laura.fernandez@cens456.edu.ar',
-                        telefono: '11-6789-0123',
-                        especialidad: 'Lengua y Literatura',
-                        modalidad: '',
-                        estado: 'activo'
-                    }
-                ];
-                saveTeachers();
-            }
-        }
-
-        // Funciones para guardar datos
-        function saveStudents() {
-            localStorage.setItem('cens456_estudiantes', JSON.stringify(localData.estudiantes));
-            updateStats();
-        }
-
-        function saveTeachers() {
-            localStorage.setItem('cens456_docentes', JSON.stringify(localData.docentes));
-            updateStats();
-        }
-
-        // Actualizar estadísticas
+        // Este dashboard ya no gestiona estudiantes/docentes localmente.
+        // Las estadísticas de estudiantes y docentes ahora se mostrarán como "N/A"
+        // o se obtendrían de una fuente externa (Google Apps Script).
         function updateStats() {
-            document.getElementById('totalEstudiantes').textContent = localData.estudiantes.length;
-            document.getElementById('totalDocentes').textContent = localData.docentes.length;
+            // Estos valores ahora son fijos o se deberían cargar desde GAS.
+            document.getElementById('totalEstudiantes').textContent = 'N/A'; 
+            document.getElementById('totalDocentes').textContent = 'N/A'; 
             document.getElementById('totalCursos').textContent = '12'; // Valor fijo por ahora
         }
 
@@ -1685,14 +1421,11 @@
                     case 'dashboard':
                         title = 'Dashboard';
                         break;
-                    case 'estudiantes':
-                        title = 'Gestión de Estudiantes';
-                        break;
-                    case 'docentes':
-                        title = 'Gestión de Docentes';
-                        break;
                     case 'reportes':
                         title = 'Reportes';
+                        break;
+                    case 'configuracion':
+                        title = 'Configuración';
                         break;
                     default:
                         title = this.textContent.trim();
@@ -1714,14 +1447,6 @@
                 case 'dashboard':
                     targetSection = document.getElementById('dashboardHome');
                     break;
-                case 'estudiantes':
-                    targetSection = document.getElementById('estudiantesSection');
-                    loadStudents();
-                    break;
-                case 'docentes':
-                    targetSection = document.getElementById('docentesSection');
-                    loadTeachers();
-                    break;
                 case 'reportes':
                     targetSection = document.getElementById('reportesSection');
                     loadReports();
@@ -1739,217 +1464,7 @@
             }
         }
 
-        // Funciones para cargar contenido de estudiantes
-        function loadStudents() {
-            const grid = document.getElementById('studentsGrid');
-            grid.innerHTML = '';
-
-            if (localData.estudiantes.length === 0) {
-                grid.innerHTML = '<p style="text-align: center; color: #6b7280; grid-column: 1 / -1;">No hay estudiantes registrados. <a href="#" onclick="showAddStudentModal()">Agrega el primero</a></p>';
-                return;
-            }
-
-            localData.estudiantes.forEach(student => {
-                const card = createStudentCard(student);
-                grid.appendChild(card);
-            });
-        }
-
-        function createStudentCard(student) {
-            const div = document.createElement('div');
-            div.className = 'student-card';
-            div.innerHTML = `
-                <div class="card-header">
-                    <div class="card-avatar">${student.nombre.charAt(0).toUpperCase()}</div>
-                    <div class="card-info">
-                        <h3>${student.nombre}</h3>
-                        <p>${student.email || 'Sin email'}</p>
-                    </div>
-                    <div class="card-actions">
-                        <button class="btn btn-sm btn-secondary" onclick="editStudent(${student.id})">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn btn-sm btn-danger" onclick="deleteStudent(${student.id})">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-details">
-                    <div class="detail-item">
-                        <div class="detail-label">Modalidad</div>
-                        <div class="detail-value">${student.modalidad}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Curso</div>
-                        <div class="detail-value">${student.curso}° Año</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Estado</div>
-                        <div class="detail-value">${student.estado}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Teléfono</div>
-                        <div class="detail-value">${student.telefono || 'N/A'}</div>
-                    </div>
-                </div>
-            `;
-            return div;
-        }
-
-        // Funciones para cargar contenido de docentes
-        function loadTeachers() {
-            const grid = document.getElementById('teachersGrid');
-            grid.innerHTML = '';
-
-            if (localData.docentes.length === 0) {
-                grid.innerHTML = '<p style="text-align: center; color: #6b7280; grid-column: 1 / -1;">No hay docentes registrados. <a href="#" onclick="showAddTeacherModal()">Agrega el primero</a></p>';
-                return;
-            }
-
-            localData.docentes.forEach(teacher => {
-                const card = createTeacherCard(teacher);
-                grid.appendChild(card);
-            });
-        }
-
-        function createTeacherCard(teacher) {
-            const div = document.createElement('div');
-            div.className = 'teacher-card';
-            div.innerHTML = `
-                <div class="card-header">
-                    <div class="card-avatar">${teacher.nombre.charAt(0).toUpperCase()}</div>
-                    <div class="card-info">
-                        <h3>${teacher.nombre}</h3>
-                        <p>${teacher.especialidad}</p>
-                    </div>
-                    <div class="card-actions">
-                        <button class="btn btn-sm btn-secondary" onclick="editTeacher(${teacher.id})">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn btn-sm btn-danger" onclick="deleteTeacher(${teacher.id})">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="card-details">
-                    <div class="detail-item">
-                        <div class="detail-label">Email</div>
-                        <div class="detail-value">${teacher.email}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Teléfono</div>
-                        <div class="detail-value">${teacher.telefono || 'N/A'}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Modalidad</div>
-                        <div class="detail-value">${teacher.modalidad || 'Todas'}</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Estado</div>
-                        <div class="detail-value">${teacher.estado}</div>
-                    </div>
-                </div>
-            `;
-            return div;
-        }
-
-        // Funciones de modales
-        function showAddStudentModal() {
-            document.getElementById('addStudentModal').style.display = 'block';
-        }
-
-        function showAddTeacherModal() {
-            document.getElementById('addTeacherModal').style.display = 'block';
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
-
-        // Cerrar modales al hacer click fuera
-        window.addEventListener('click', function(e) {
-            if (e.target.classList.contains('modal')) {
-                e.target.style.display = 'none';
-            }
-        });
-
-        // Formulario de agregar estudiante
-        document.getElementById('addStudentForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const newStudent = {
-                id: Date.now(),
-                nombre: document.getElementById('studentName').value,
-                email: document.getElementById('studentEmail').value,
-                telefono: document.getElementById('studentPhone').value,
-                modalidad: document.getElementById('studentModalidad').value,
-                curso: document.getElementById('studentCurso').value,
-                estado: 'activo',
-                fechaIngreso: new Date().toISOString().split('T')[0]
-            };
-
-            localData.estudiantes.push(newStudent);
-            saveStudents();
-            closeModal('addStudentModal');
-            this.reset();
-            
-            if (document.getElementById('estudiantesSection').style.display === 'block') {
-                loadStudents();
-            }
-        });
-
-        // Formulario de agregar docente
-        document.getElementById('addTeacherForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const newTeacher = {
-                id: Date.now(),
-                nombre: document.getElementById('teacherName').value,
-                email: document.getElementById('teacherEmail').value,
-                telefono: document.getElementById('teacherPhone').value,
-                especialidad: document.getElementById('teacherSpecialty').value,
-                modalidad: document.getElementById('teacherModalidad').value,
-                estado: 'activo'
-            };
-
-            localData.docentes.push(newTeacher);
-            saveTeachers();
-            closeModal('addTeacherModal');
-            this.reset();
-            
-            if (document.getElementById('docentesSection').style.display === 'block') {
-                loadTeachers();
-            }
-        });
-
-        // Funciones de CRUD
-        function deleteStudent(id) {
-            if (confirm('¿Estás seguro de que quieres eliminar este estudiante?')) {
-                localData.estudiantes = localData.estudiantes.filter(s => s.id !== id);
-                saveStudents();
-                loadStudents();
-            }
-        }
-
-        function deleteTeacher(id) {
-            if (confirm('¿Estás seguro de que quieres eliminar este docente?')) {
-                localData.docentes = localData.docentes.filter(t => t.id !== id);
-                saveTeachers();
-                loadTeachers();
-            }
-        }
-
-        function editStudent(id) {
-            // Por ahora solo mostrar alerta, se puede implementar modal de edición
-            alert('Función de edición en desarrollo');
-        }
-
-        function editTeacher(id) {
-            // Por ahora solo mostrar alerta, se puede implementar modal de edición
-            alert('Función de edición en desarrollo');
-        }
-
-        // Función para cargar reportes
+        // Funciones para cargar reportes
         function loadReports() {
             // Crear gráficos simples usando Canvas
             setTimeout(() => {
@@ -1965,7 +1480,7 @@
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // Datos de ejemplo
+            // Datos de ejemplo (simulados ya que la gestión es externa)
             const data = [85, 78, 92, 88, 76];
             const labels = ['1° Año', '2° Año', '3° Año', 'Presencial', 'Virtual'];
             
@@ -1999,7 +1514,7 @@
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // Datos de ejemplo
+            // Datos de ejemplo (simulados ya que la gestión es externa)
             const data = [45, 35, 20];
             const labels = ['Presencial', 'Semipresencial', 'Acelerado'];
             const colors = ['#2563eb', '#10b981', '#f59e0b'];
@@ -2021,9 +1536,8 @@
                 ctx.fill();
                 
                 // Etiquetas
-                const labelAngle = currentAngle + sliceAngle / 2;
-                const labelX = centerX + Math.cos(labelAngle) * (radius + 20);
-                const labelY = centerY + Math.sin(labelAngle) * (radius + 20);
+                const labelX = centerX + Math.cos(currentAngle + sliceAngle / 2) * (radius + 20);
+                const labelY = centerY + Math.sin(currentAngle + sliceAngle / 2) * (radius + 20);
                 
                 ctx.fillStyle = '#374151';
                 ctx.font = '12px Arial';
@@ -2044,21 +1558,6 @@
                 document.getElementById('profileRole').value = userData.role;
             }
         }
-
-        // Búsqueda de estudiantes
-        document.getElementById('studentSearch')?.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            const cards = document.querySelectorAll('.student-card');
-            
-            cards.forEach(card => {
-                const name = card.querySelector('h3').textContent.toLowerCase();
-                if (name.includes(searchTerm)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
 
         // Función para abrir Google Apps Script
         function openAppScript(appType) {
@@ -2131,8 +1630,7 @@
         // Inicializar timer
         resetActivityTimer();
 
-        // Inicializar todo cuando se carga la página
-        initializeSampleData();
+        // Inicializar las estadísticas (que ahora son fijas o provienen de GAS)
         updateStats();
 
         // Configuración del perfil y cambio de contraseña
@@ -2230,11 +1728,11 @@
             userDropdownMenu.insertBefore(configItem, logoutBtn);
         }
 
-        console.log('🏫 Dashboard CENS 456 cargado correctamente');
+        console.log('🏫 Dashboard CENS 456 cargado correctamente!');
         console.log('🔗 Google Apps Script configurados:', Object.keys(appScriptUrls));
         console.log('👥 Roles disponibles: administrador, preceptor, dicyt, profesor');
         console.log('🔐 Control de acceso por roles activado');
-        console.log('📊 Sistema de gestión completamente funcional');
+        console.log('📊 Gestión de Estudiantes, Docentes y Galería ahora a través de Google Apps Script.');
         console.log('👤 Sistema de registro de usuarios activo');
     </script>
 </body>
