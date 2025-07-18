@@ -6,13 +6,14 @@
 }
 
 :root {
-    --primary-color: #2563eb;
-    --primary-dark: #1d4ed8;
-    --secondary-color: #64748b;
-    --accent-color: #f59e0b;
-    --success-color: #10b981;
-    --text-dark: #1e293b;
-    --text-light: #64748b;
+    /* Paleta de colores basada en el logo */
+    --primary-color: #f59e0b; /* Naranja del logo como color principal */
+    --primary-dark: #d97706; /* Naranja más oscuro para hover/sombras */
+    --secondary-color: #64748b; /* Gris secundario del logo */
+    --accent-color: #1e293b; /* Gris oscuro (casi negro) como acento */
+    --success-color: #10b981; /* Verde se mantiene para notificaciones de éxito */
+    --text-dark: #1e293b; /* Color de texto oscuro principal */
+    --text-light: #64748b; /* Color de texto claro */
     --bg-light: #f8fafc;
     --bg-white: #ffffff;
     --border-color: #e2e8f0;
@@ -20,14 +21,13 @@
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    --gradient-primary: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-    --gradient-accent: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    --gradient-primary: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    --gradient-accent: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
 
-    /* Colores adaptados del logo (ejemplo, ajustar según el logo real) */
-    --logo-primary-text-color: #1e293b; /* Un gris oscuro, casi negro */
-    --logo-secondary-text-color: #64748b; /* Un gris más claro */
-    /* Si el logo tiene un azul o naranja específico, puedes añadirlos aquí */
-    --logo-accent-color: #f59e0b; /* Color naranja del logo si lo tuviera */
+    /* Colores del logo (para referencia) */
+    --logo-primary-text-color: #1e293b;
+    --logo-secondary-text-color: #64748b;
+    --logo-accent-color: #f59e0b;
 }
 
 /* Base styles */
