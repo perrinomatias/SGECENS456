@@ -116,7 +116,7 @@ p {
 .nav-container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center; /* Centrar el contenido */
     padding: 1rem;
     max-width: 1200px;
     margin: 0 auto;
@@ -196,7 +196,10 @@ p {
     flex-direction: column;
     cursor: pointer;
     gap: 4px;
-    order: -1;
+    position: absolute; /* Posicionamiento absoluto */
+    left: 1rem; /* A la izquierda */
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .nav-toggle span {
@@ -1044,8 +1047,7 @@ p {
     
     .nav-toggle {
         display: flex;
-        order: -1; /* Mueve el toggle a la izquierda del logo */
-        margin-right: 1rem; /* Añade espacio entre el toggle y el logo */
+        /* Ya no se necesita order ni margin */
     }
     
     .nav-toggle.active span:nth-child(1) {
@@ -1178,10 +1180,13 @@ p {
     border-radius: 25px !important;
     font-weight: 600 !important;
     transition: all 0.3s ease !important;
-    margin-left: 1rem !important;
     display: flex !important;
     align-items: center !important;
     gap: 0.5rem !important;
+    position: absolute; /* Posicionamiento absoluto */
+    right: 1rem; /* A la derecha */
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .nav-link-special:hover {
@@ -1196,10 +1201,11 @@ p {
 
 @media (max-width: 768px) {
     .nav-link-special {
-        margin-left: 0 !important;
-        margin-top: 1rem !important;
-        text-align: center !important;
-        justify-content: center !important;
+        position: static; /* Quitar posicionamiento absoluto */
+        transform: none; /* Quitar transformación */
+        margin: 1rem auto 0; /* Centrar y añadir margen superior */
+        display: inline-flex; /* Asegurar que se muestre como bloque en el menú */
+        width: fit-content; /* Ajustar ancho al contenido */
     }
 }
 
