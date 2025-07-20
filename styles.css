@@ -1124,6 +1124,7 @@ p {
 
     .nav-logo .logo-text {
         font-size: 0.9rem; /* Ajustar tamaño de fuente */
+        flex-shrink: 1; /* Permitir que el texto se encoja si es necesario */
     }
 
     .nav-logo .logo-main {
@@ -1161,11 +1162,11 @@ p {
     }
 
     .nav-logo .logo-main {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     .nav-logo .logo-location {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
     }
 }
 
